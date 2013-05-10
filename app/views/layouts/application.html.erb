@@ -12,26 +12,29 @@
     <%= yield(:head) %>
   </head>
   <body>
-    <header class="navbar navbar-fixed-top">
-      <nav class="navbar-inner">
+  <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
         <div class="container">
-          <%= render 'layouts/navigation' %>
+           <%= render 'layouts/navigation' %>
         </div>
-      </nav>
-    </header>
-    <div id="main" role="main">
+      </div>
+    </div>
+    <header class="jumbotron subhead" id="overview">
       <div class="container">
-        <div class="content">
-           <div class="row">
-            <div class="span12">
+        <h1>Save The Reader</h1>
+        <p class="lead">A minimalistic CSS reader.</p>
+      </div>
+    </header>
+      <div class="container">
+        <div class="row">
+            <div class="span3 bs-docs-sidebar">
+              <%= render 'layouts/sidebar' %>
+            </div>
+            <div class="span9">
               <%= render 'layouts/messages' %>
               <%= yield %>
             </div>
-          </div>
-          <footer>
-          </footer>
         </div>
       </div> <!--! end of .container -->
-    </div> <!--! end of #main -->
   </body>
 </html>

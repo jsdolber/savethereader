@@ -1,0 +1,14 @@
+<% @feeds.entries.each do |feed| %>
+
+<section id="feed">
+  <h3><%= feed.title %></h3>
+  <p><%= feed.summary.html_safe unless feed.content.nil? %></p>
+  <div class="bs-docs-example">
+    <div class="tabbable" style="margin-bottom: 18px;">
+      <%= feed.content.nil?? feed.summary.html_safe : feed.content.html_safe %>
+    </div> <!-- /tabbable -->
+  </div>
+</section>
+<% end %>
+
+
