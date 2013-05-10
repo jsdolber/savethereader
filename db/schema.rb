@@ -11,11 +11,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130506020526) do
+ActiveRecord::Schema.define(:version => 20130510035745) do
+
+  create_table "entries", :force => true do |t|
+    t.integer  "feed_id"
+    t.string   "title"
+    t.string   "summary"
+    t.string   "content"
+    t.string   "categories"
+    t.string   "url"
+    t.string   "published"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "feeds", :force => true do |t|
     t.string   "title"
     t.string   "url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "readentries", :force => true do |t|
+    t.integer  "entry_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "feed_id"
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

@@ -1,10 +1,7 @@
 require 'test_helper'
 
 class FeedTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-
+  
   test "don't save without mandatory fields" do
     feed = Feed.new
     assert !feed.save, "don't save feed without mandatory fields"

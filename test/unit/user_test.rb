@@ -1,10 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-  #
+  
   test "don't save without mandatory fields" do
     user = User.new
     assert !user.save, "saved user without mandatory fields"
