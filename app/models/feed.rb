@@ -3,6 +3,7 @@ class Feed < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :title, :url
   has_many :subscriptions
+  has_many :entries
 
   validates_uniqueness_of :url
 
@@ -10,9 +11,8 @@ class Feed < ActiveRecord::Base
     return if feedzirra.entries.nil?
     
     feedzirra.entries.each do |entry|
-        fentry = self.entries.find_by_url(entry.url)
-        if (fentry.nil? ||
-            (fentry && fentry.published != entry.published))
+        fentry = self.entries.find_by_guid(entry.id)
+        if fentry.nil?
           new_entry = Entry.init_with_feedzirra_entry(entry)
           new_entry.feed_id = self.id
           new_entry.save!

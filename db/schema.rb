@@ -11,18 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130510130643) do
+ActiveRecord::Schema.define(:version => 20130512224738) do
 
   create_table "entries", :force => true do |t|
     t.integer  "feed_id"
     t.string   "title"
-    t.string   "summary"
-    t.string   "content"
+    t.text     "summary"
+    t.text     "content"
     t.string   "categories"
     t.string   "url"
     t.string   "published"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "guid"
   end
 
   create_table "feeds", :force => true do |t|
@@ -39,12 +40,18 @@ ActiveRecord::Schema.define(:version => 20130510130643) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "subscription_groups", :force => true do |t|
+    t.string   "name"
+    t.string   "color"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "subscriptions", :force => true do |t|
     t.integer  "feed_id"
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "group"
   end
 
   create_table "users", :force => true do |t|

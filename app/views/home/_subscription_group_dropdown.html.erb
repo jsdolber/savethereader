@@ -1,0 +1,12 @@
+<div class="btn-group">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+         <span id="selectionGroup">Group...</span>
+         <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li class="nav-header">Groups</li>
+      <% @groups.each do |group| %>      
+       <li><a class="subscription-group" href="#"><%= group.name %></a></li>
+      <% end %>
+     </ul>
+</div>
