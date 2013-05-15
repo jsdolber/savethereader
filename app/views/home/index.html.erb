@@ -1,7 +1,7 @@
 <div class="feed-view">
-  <% unless @feed.nil? %>
+  <% unless @entries.empty? %>
    <%= render 'subscriptions/feed', :object => @feed %>
-   <%= link_to 'Load More', subscription_path(id: @feed.id, page: (params[:page].to_i || 1)+1, per_page: params[:per_page] || 15), class: 'hook', remote: true %>
+   <%= link_to 'Load More', subscription_path(id: @subscription_id, format: :js, page: (params[:page].to_i || 1)+1, per_page: params[:per_page] || 15), class: 'hook', remote: true %>
   <% end%>
 </div>
 

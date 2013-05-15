@@ -1,6 +1,6 @@
-<% if @feed.entries.all.count>0 -%>
-$('#feed-view').append('<%= escape_javascript(render(partial: 'feed', object: @feed)) %>');
-$('a.hook').attr('href', '<%= subscription_path(id: @feed.id, page: (params[:page].to_i || 1)+1, per_page: params[:per_page] || 15) %>').show();
+<% if @entries.all.count>0 -%>
+$('div.feed-view').append('<%= escape_javascript(render(partial: 'feed', object: @entries)) %>');
+$('a.hook').attr('href', '<%= subscription_path(id: @subscription_id, format: :json, page: (params[:page].to_i || 1)+1, per_page: params[:per_page] || 15) %>').show();
 <% else -%>
 $('a.hook').hide();
 <% end -%>

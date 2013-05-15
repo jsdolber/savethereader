@@ -1,4 +1,4 @@
-<% @feed.entries.each do |entry| %>
+<% @entries.each do |entry| %>
 <section id="feed">
   <h3><%= entry.title %></h3>
   <p><%= entry.summary.html_safe unless entry.content.nil? %></p>

@@ -16,7 +16,8 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions/1.json
   def show
     @subscription = Subscription.find(params[:id])
-
+    @entries = @subscription.feed.entries.paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
+    @subscription_id = @subscription.id
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @subscription }
