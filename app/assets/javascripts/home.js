@@ -9,11 +9,11 @@ $(document).ready(function(){
 
    $("#modal-err").hide();
 
-   $('.subscription-group').click(function() {
+   $('.subscription-group').bind('click', function() {
       $("#selectionGroup").html($(this).text())
    });
   
-   $("#subs-url").keyup(function() {
+   $("#subs-url").bind('keyup', function() {
     if (validateUrl($(this).val())) {
       toggleSaveBtn(true);
     }
@@ -22,12 +22,20 @@ $(document).ready(function(){
     }
    }).keyup();
 
-   $(".btn-save").click(function() {
+   $(".btn-save").bind('click', function() {
       createSubscription($("#subs-url").val(), 
                         $("#selectionGroup").html()); 
    });
 
+   // initial subscription reading
    $('.feed-link').first().addClass('active');
+
+   // subscription onclick functionality
+   $('.feed-link').bind('click', function(){
+       $('.feed-link').removeClass('active');
+       $(this).addClass('active');
+       loadSubscription($(this).attr("id"));
+   });
 
    function createSubscription(url, group) {
       isSaving(true);
@@ -49,6 +57,19 @@ $(document).ready(function(){
       if (group != 'Group...')
         return {url: url, group: group};
       return {url: url};
+   }
+
+   function loadSubscription(subs_id) {
+      $.get("/subscriptions/" + subs_id + ".js"
+      )
+      .done(function(data) { 
+        eval(data);
+      })
+      .fail(function() {
+        $("#modal-err .msg").text('We were unable to serve this subscription.');
+        $("#modal-err").show(); 
+      })
+      .always(function(data, textStatus) { }); 
    }
 
    function toggleSaveBtn(enabled) {

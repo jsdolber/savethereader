@@ -1,6 +1,11 @@
 <% if @entries.all.count>0 -%>
-$('div.feed-view').append('<%= escape_javascript(render(partial: 'feed', object: @entries)) %>');
-$('a.hook').attr('href', '<%= subscription_path(id: @subscription_id, format: :json, page: (params[:page].to_i || 1)+1, per_page: params[:per_page] || 15) %>').show();
+ var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
+ <% if params[:page].to_i == 0 %>
+    $('div.feed-view').html(feed_html);
+ <% else %>
+    $('div.feed-view').append(feed_html);
+ <% end %>
+ $('a.hook').attr('href', '<%= subscription_path(id: @subscription_id, format: :js, page: (params[:page] || 1).to_i + 1, per_page: params[:per_page] || 15) %>').show();
 <% else -%>
-$('a.hook').hide();
+ $('a.hook').hide();
 <% end -%>
