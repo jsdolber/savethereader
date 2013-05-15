@@ -1,14 +1,8 @@
-<ul class="nav nav-list bs-docs-sidenav affix-top">
-<li class="nav-header">Tech</li>
-  <li class="active"><a href="#dropdowns"><i class="icon-chevron-right"></i>Coding Horror <span class='unreadcnt'>24</span></a></li>
-  <li><a href="#buttonGroups"><i class="icon-chevron-right"></i>Hacker News</a></li>
-  <li><a href="#buttonDropdowns"><i class="icon-chevron-right"></i>Techcrunch</a></li>
-  <li><a href="#navs"><i class="icon-chevron-right"></i>Engadget <span class='unreadcnt'>8</span></a></li>
-  <li class="nav-header">General</li>
-  <li><a href="#navbar"><i class="icon-chevron-right"></i>Wired</a></li>
-  <li><a href="#breadcrumbs"><i class="icon-chevron-right"></i>Slashdot <span class='unreadcnt'>400</span></a></li>
-  <li><a href="#pagination"><i class="icon-chevron-right"></i>Torrent Freak</a></li>
-</ul>
+<% if @subs_groups.nil? %>
+  <%= display_public_sidebar_feeds.html_safe %>
+<% else %>
+  <%= display_user_sidebar_feeds(@subs_groups, @subs_ungroup).html_safe %>
+<% end %>
 <div class="spacer">&nbsp;</div>
 <p class="main">
 <a id="trigger" href="#subscriptionModal" class="btn btn-large btn-primary" data-toggle="modal">Add subscription...</a>

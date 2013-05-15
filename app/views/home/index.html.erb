@@ -1,14 +1,8 @@
-<% @feeds.entries.each do |feed| %>
+<div class="feed-view">
+  <% unless @feed.nil? %>
+   <%= render 'subscriptions/feed', :object => @feed %>
+   <%= link_to 'Load More', subscription_path(id: @feed.id, page: (params[:page].to_i || 1)+1, per_page: params[:per_page] || 15), class: 'hook', remote: true %>
+  <% end%>
+</div>
 
-<section id="feed">
-  <h3><%= feed.title %></h3>
-  <p><%= feed.summary.html_safe unless feed.content.nil? %></p>
-  <div class="bs-docs-example">
-    <div class="tabbable" style="margin-bottom: 18px;">
-      <%= feed.content.nil?? feed.summary.html_safe : feed.content.html_safe %>
-    </div> <!-- /tabbable -->
-  </div>
-</section>
-<% end %>
 <%= render 'new_subscription' %>
-

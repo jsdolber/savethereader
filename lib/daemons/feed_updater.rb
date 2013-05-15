@@ -18,9 +18,9 @@ while($running) do
   
   # Replace this with your code
   Rails.logger.auto_flushing = true
-  Rails.logger.info "This daemon is still running at #{Time.now}.\n"
+  Rails.logger.info "Updating feeds at #{Time.now}.\n"
 
-  urls = Feed.find(:all).map {|feed| feed.url }
+  urls = Feed.all.map {|feed| feed.url }
  
   feeds = Feedzirra::Feed.fetch_and_parse(urls)
 
