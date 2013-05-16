@@ -6,6 +6,11 @@ $(document).ready(function(){
      }
    });
 
+   $('.feed').bind('inview', function(e,visible) {
+    if( !visible ) {
+      //alert($(this).attr("id")); 
+    }
+   });
 
    $("#modal-err").hide();
 

@@ -46,5 +46,8 @@ gem 'will_paginate'
 # Deploy with Capistrano
 # gem 'capistrano'
 
-# To use debugger
-gem 'debugger'
+group :development do
+ gem 'debugger'
+end
+
+gem 'newrelic_rpm'
