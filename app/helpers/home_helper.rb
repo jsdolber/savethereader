@@ -18,13 +18,13 @@ module HomeHelper
         unless group.subscriptions.empty?
           concat(label_to_li_grp(group.name)) +
           group.subscriptions.collect do |subs|
-            concat(label_to_li(subs.feed.title, subs.feed.url, subs.id, nil))
+            concat(label_to_li(subs.feed.title, subs.feed.url, subs.id, subs.unread_count))
           end  
         end      
       end 
       concat(label_to_li_grp("Uncategorized")) +
       subs_ungroup.collect do |subs|
-         concat(label_to_li(subs.feed.title, subs.feed.url, subs.id, nil))
+         concat(label_to_li(subs.feed.title, subs.feed.url, subs.id, subs.unread_count))
       end 
     end unless (subs_ungroup.nil? || subs_ungroup.empty?)
   end
@@ -35,7 +35,7 @@ module HomeHelper
          content_tag(:a, :href => "##{url}") do
           feed_item_icon + 
           label +
-          unless unread_cnt.nil?
+          unless unread_cnt.nil? || unread_cnt == 0
             unread_count_icon(unread_cnt)
           end
          end

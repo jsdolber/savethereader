@@ -6,9 +6,10 @@ $(document).ready(function(){
      }
    });
 
-   $('.feed').bind('inview', function(e,visible) {
-    if( !visible ) {
-      //alert($(this).attr("id")); 
+   $('.entry').bind('inview', function(e,visible) {
+    if( !visible && direction == 'down') {
+      $(this).fadeTo(0, 0.5);
+      console.log($(this).attr("id"));
     }
    });
 
@@ -32,15 +33,16 @@ $(document).ready(function(){
                         $("#selectionGroup").html()); 
    });
 
-   // initial subscription reading
-   $('.feed-link').first().addClass('active');
-
    // subscription onclick functionality
    $('.feed-link').bind('click', function(){
        $('.feed-link').removeClass('active');
        $(this).addClass('active');
        loadSubscription($(this).attr("id"));
    });
+
+   // initial subscription reading
+   $('.feed-link').first().click();
+   $(".entry.read").fadeTo(1, 0.5);
 
    function createSubscription(url, group) {
       isSaving(true);
@@ -105,6 +107,34 @@ $(document).ready(function(){
         $("#subs-url").val('');
         $("#selectionGroup").html("Group...");
    }
+
+    // scroll logic
+
+    'use strict';
+
+    var lastScrollTop = 0,
+        st,
+        direction;
+
+    function detectDirection() {
+
+        st = window.pageYOffset;
+
+        if (st > lastScrollTop) {
+            direction = "down";
+        } else {
+            direction = "up";
+        }
+
+        lastScrollTop = st;
+
+        return  direction;
+
+    }
+
+    $(window).bind('scroll', function() {
+        detectDirection();
+    });
 
 });
 

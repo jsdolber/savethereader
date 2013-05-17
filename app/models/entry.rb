@@ -15,4 +15,9 @@ class Entry < ActiveRecord::Base
     new_entry.published = entry.published
     new_entry
   end
+
+  def is_read(user_id)
+    return false if user_id.nil?
+    return Readentry.exists?(:user_id => user_id, :entry_id => self.id)
+  end
 end

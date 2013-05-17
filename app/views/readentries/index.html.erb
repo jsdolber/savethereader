@@ -1,0 +1,21 @@
+<h1>Listing readentries</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @readentries.each do |readentry| %>
+  <tr>
+    <td><%= link_to 'Show', readentry %></td>
+    <td><%= link_to 'Edit', edit_readentry_path(readentry) %></td>
+    <td><%= link_to 'Destroy', readentry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Readentry', new_readentry_path %>

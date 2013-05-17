@@ -1,8 +1,4 @@
-<% unless @entries.empty? %>
-  <div class="feed-view"> 
-    <%= render 'subscriptions/feed', :object => @feed %>
-  </div>
-  <%= link_to 'Load More', subscription_path(id: @subscription_id, format: :js, page: (params[:page] || 1).to_i + 1, per_page: params[:per_page] || 15), class: 'hook', remote: true %>
-<% end%>
+<div class="feed-view"></div>
+<a class="hook">Load More</a>
 
 <%= render 'new_subscription' %>
