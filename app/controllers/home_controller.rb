@@ -10,6 +10,7 @@ class HomeController < ApplicationController
     @subs_groups = current_user.subscription_groups
     @subs_ungroup = current_user.subscriptions.where(:group_id => nil)
     @groups = all_groups
+    @user = current_user
     render :template => 'home/index'
   end
 
