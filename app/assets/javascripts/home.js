@@ -1,16 +1,11 @@
+var bindInviewEntries;
+
 $(document).ready(function(){
    
    $('a.hook').bind('inview', function(e,visible) {
     if( visible ) {
       $.getScript($(this).attr("href"));
      }
-   });
-
-   $('.entry').bind('inview', function(e,visible) {
-    if( !visible && direction == 'down') {
-      $(this).fadeTo(0, 0.5);
-      console.log($(this).attr("id"));
-    }
    });
 
    $("#modal-err").hide();
@@ -42,7 +37,6 @@ $(document).ready(function(){
 
    // initial subscription reading
    $('.feed-link').first().click();
-   $(".entry.read").fadeTo(1, 0.5);
 
    function createSubscription(url, group) {
       isSaving(true);
@@ -101,11 +95,11 @@ $(document).ready(function(){
    }
 
    function addNewSubscription(data) {
-        //alert(data); 
         toggleSaveBtn(true);
         isSaving(false); 
         $("#subs-url").val('');
         $("#selectionGroup").html("Group...");
+        // TODO: add to sidebar
    }
 
     // scroll logic
@@ -136,6 +130,29 @@ $(document).ready(function(){
         detectDirection();
     });
 
+    // entry inview binding
+    bindInviewEntries = function() {
+     $('.entry').bind('inview', function(e,visible) {
+      if( !visible && direction == 'down' && $(this).hasClass("unread")) {
+       entryWasRead($(this));
+      }
+     });
+    };
+
+    function entryWasRead(entryEl) {
+
+      $.post("/readentries.json",
+      {
+         'readentry[entry_id]': entryEl.attr("id"),
+         'readentry[subscription_id]': $(".feed-link.active").attr("id")
+      })
+      .done(function(data) { 
+        entryEl.fadeTo(0, 0.5);
+        entryEl.removeClass("unread");
+        entryEl.addClass("read");
+        $(".feed-link.active .unreadcnt").html(parseInt($(".feed-link.active .unreadcnt").text()) - 1);
+      })
+    } 
 });
 
 

@@ -1,6 +1,6 @@
 module HomeHelper
   def display_public_sidebar_feeds
-    content_tag(:ul, :class => "nav nav-list bs-docs-sidenav affix-top") do
+    content_tag(:ul, :class => "nav nav-list bs-docs-sidenav sidebar-nav sidebar-nav-fixed affix-top") do
       concat(label_to_li_grp("Tech")) +
       ['Coding Horror', 'Hacker News', 'Techcrunch'].collect do |member|
         concat(label_to_li(member, '#', nil, nil))
@@ -13,7 +13,7 @@ module HomeHelper
   end
 
   def display_user_sidebar_feeds(subs_group, subs_ungroup)
-    content_tag(:ul, :class => "nav nav-list bs-docs-sidenav affix-top") do
+    content_tag(:ul, :class => "nav nav-list sidebar-nav affix-top") do
       subs_group.each do |group|
         unless group.subscriptions.empty?
           concat(label_to_li_grp(group.name)) +

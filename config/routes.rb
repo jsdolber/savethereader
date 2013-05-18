@@ -13,6 +13,7 @@ Savethereader::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   resources :subscriptions
+  resources :readentries
 
   # Sample resource route with options:
   #   resources :products do

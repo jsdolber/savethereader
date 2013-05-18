@@ -1,3 +1,28 @@
 @import "bootstrap";
 body { padding-top: 60px; }
 @import "bootstrap-responsive";
+
+ @media (max-width: 767px) {
+     .sidebar-nav-fixed {
+         width:auto;
+     }
+ }
+
+ @media (max-width: 979px) {
+     .sidebar-nav-fixed {
+         position:static;
+        width: auto;
+     }
+ }
+
+ .sidebar-nav-fixed {
+    padding: 9px 0;
+    position:fixed;
+    left:20px;
+    top:60px;
+    width:250px;
+}
+
+.row-fluid > .span-fixed-sidebar {
+    margin-left: 350px;
+}

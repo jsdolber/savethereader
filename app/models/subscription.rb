@@ -17,7 +17,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def unread_count
-    r_entries = Readentry.where(:user_id => self.user.id, :feed_id => self.feed.id).collect {|re| re.entry_id }
+    r_entries = Readentry.where(:user_id => self.user.id, :subscription_id => self.id).collect {|re| re.entry_id }
     entries = feed.entries.all.collect { |entry| entry.id } #watch out for scaling issues
     (entries - r_entries).count 
   end

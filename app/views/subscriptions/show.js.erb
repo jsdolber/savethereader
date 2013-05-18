@@ -1,11 +1,16 @@
 <% if @entries.all.count>0 -%>
- var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
+  var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
+  var hide_read_entries = false;
  <% if params[:page].to_i == 0 %>
-    $('div.feed-view').html(feed_html);
+   $('div.feed-view').html(feed_html);
+   hide_read_entries = true;
  <% else %>
     $('div.feed-view').append(feed_html);
  <% end %>
  $('a.hook').attr('href', '<%= subscription_path(id: @subscription_id, format: :js, page: (params[:page] || 1).to_i + 1, per_page: params[:per_page] || 15) %>').show();
+ bindInviewEntries();
+ $(".entry.read").fadeTo(1, 0.5);
+ hide_read_entries? $(".entry.read").hide() : false;
 <% else -%>
  $('a.hook').hide();
 <% end -%>

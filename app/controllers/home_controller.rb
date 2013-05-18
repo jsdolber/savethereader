@@ -9,10 +9,7 @@ class HomeController < ApplicationController
   def s
     @subs_groups = current_user.subscription_groups
     @subs_ungroup = current_user.subscriptions.where(:group_id => nil)
-    @entries = nil #current_user.subscriptions.first.feed.entries.order("created_at DESC").paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
     @groups = all_groups
-    @subscription_id = current_user.subscriptions.first.id.to_s
-    @user_id = current_user.id
     render :template => 'home/index'
   end
 

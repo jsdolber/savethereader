@@ -42,7 +42,9 @@ class ReadentriesController < ApplicationController
   # POST /readentries
   # POST /readentries.json
   def create
+
     @readentry = Readentry.new(params[:readentry])
+    @readentry.user_id = current_user.id
 
     respond_to do |format|
       if @readentry.save

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "SaveTheReader" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "Save The Reader" %></title>
     <meta name="description" content="">
     <meta name="author" content="">
     <%= stylesheet_link_tag "application", :media => "all" %>
@@ -14,27 +14,31 @@
   <body>
   <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
+        <div class="container-fluid">
            <%= render 'layouts/navigation' %>
         </div>
       </div>
-    </div>
-    <header class="jumbotron subhead" id="overview">
-      <div class="container">
-        <h1>Save The Reader</h1>
-        <p class="lead">A minimalistic CSS reader.</p>
-      </div>
-    </header>
-      <div class="container">
-        <div class="row">
-            <div class="span3 bs-docs-sidebar">
-              <%= render 'layouts/sidebar' %>
+  </div>
+  <div class="container-fluid">
+     <div class="row-fluid row">
+       <div class="span3">
+          <div class="sidebar-nav-fixed">
+            <div class="row-fluid">
+              <h1>Save The Reader</h1>
+              <p class="lead">A minimalistic RSS reader.</p>
             </div>
-            <div class="span9">
-              <%= render 'layouts/messages' %>
-              <%= yield %>
+            <div class="row-fluid">
+                <%= render 'layouts/sidebar' %>
+            </div>         
+          </div>  <!--! end of .sidebar-nav-fixed-->
+        </div>  <!--! end of .span3-->
+        <div class="span9 span-fixed-sidebar">
+            <div class="jumbotron subhead" id="overview">
+                <%= render 'layouts/messages' %>
+                <%= yield %>
             </div>
         </div>
-      </div> <!--! end of .container -->
-  </body>
-</html>
+       </div> <!--! end of .row-fluid-->
+     </div> <!--! end of .container -->
+    </body>
+  </html>
