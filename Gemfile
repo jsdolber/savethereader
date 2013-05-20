@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.10'
+gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -48,6 +48,9 @@ gem 'will_paginate'
 
 group :development do
  gem 'debugger'
+ gem 'better_errors'
+ gem 'binding_of_caller'
+ gem 'meta_request'
 end
 
 gem 'newrelic_rpm'
