@@ -16,3 +16,5 @@
 
 config/initializers/secret_token.rb
 brakeman.html
+
+log/feed_updater.rb.pid
