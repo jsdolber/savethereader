@@ -1,6 +1,6 @@
 <% @entries.each do |entry| %>
   <section class="entry <%= entry.is_read(@user_id)? 'read' : 'unread' %>" id="<%= entry.id %>">
-  <h3><%= entry.title %></h3>
+  <h3><a href="<%= h(entry.url) %>" target="_blank"><%= h(entry.title) %></a></h3>
   <p><%= entry.summary.html_safe unless entry.content.nil? %></p>
   <div class="bs-docs-example">
     <div class="tabbable" style="margin-bottom: 18px;">

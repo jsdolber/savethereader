@@ -1,4 +1,5 @@
 var bindInviewEntries;
+var bindSubscriptionNavigation;
 
 $(document).ready(function(){
    
@@ -29,13 +30,16 @@ $(document).ready(function(){
    });
 
    // subscription onclick functionality
-   $('.feed-link').bind('click', function(){
+   bindSubscriptionNavigation = function() {
+    $('.feed-link').bind('click', function(){
        $('.feed-link').removeClass('active');
        $(this).addClass('active');
        loadSubscription($(this).attr("id"));
-   });
+    });   
+   }
 
    // initial subscription reading
+   bindSubscriptionNavigation();
    $('.feed-link').first().click();
 
    function createSubscription(url, group) {
@@ -73,6 +77,37 @@ $(document).ready(function(){
       .always(function(data, textStatus) { }); 
    }
 
+   function updateSubscriptionGroup(subs_id, group_id) {
+     $.ajax({url: "/subscriptions/" + subs_id + ".json", 
+             type: 'PUT',
+             data: {
+                    'subscription[id]' : subs_id,
+                    'subscription[group_id]' : group_id
+                   }
+     })
+      .done(function(data) { 
+        //eval(data);
+        loadSidebar();
+      })
+   }
+
+   function removeSubscription(subs_id) {
+     $.ajax({url: "/subscriptions/" + subs_id + ".json", 
+             type: 'DELETE'
+     })
+      .done(function(data) { 
+        //eval(data);
+      })
+   }
+
+   function loadSidebar() {
+      $.get("/subscription_sidebar.js"
+      )
+      .done(function(data) { 
+        eval(data);
+      })
+   }
+
    function toggleSaveBtn(enabled) {
       if (enabled) {
         $(".btn-save").fadeTo(0, 1);
@@ -99,11 +134,10 @@ $(document).ready(function(){
         isSaving(false); 
         $("#subs-url").val('');
         $("#selectionGroup").html("Group...");
-        // TODO: add to sidebar
+        loadSidebar();
    }
 
     // scroll logic
-
     'use strict';
 
     var lastScrollTop = 0,
@@ -150,9 +184,62 @@ $(document).ready(function(){
         entryEl.fadeTo(0, 0.5);
         entryEl.removeClass("unread");
         entryEl.addClass("read");
-        $(".feed-link.active .unreadcnt").html(parseInt($(".feed-link.active .unreadcnt").text()) - 1);
+        var unread_cnt = parseInt($(".feed-link.active .unreadcnt").text());
+        if (unread_cnt > 0)
+          $(".feed-link.active .unreadcnt").html(unread_cnt - 1);
       })
-    } 
+    }
+
+    function toggleSubscriptionButton(active) {
+        var el = $("a#trigger");
+        var subLbl = "Add subscription...";
+        var remLbl = "Drop here to remove";
+        if (!active) {
+          el.addClass("btn-danger");
+          el.find("i").removeClass("icon-rss");
+          el.find("i").addClass("icon-trash");
+          el.html(el.html().replace(subLbl, remLbl));
+        }
+        else {
+          el.removeClass("btn-danger");
+          el.find("i").addClass("icon-rss");
+          el.find("i").removeClass("icon-trash");
+          el.html(el.html().replace(remLbl, subLbl));
+        }
+    }
+
+   // sidebar drag
+   var is_el_out = false;
+   $("ul.nav-list").sortable({ 
+     cancel: ".group", 
+     beforeStop: function( event, ui ) {
+        var subs_id = ui.item.attr("id");
+        if (!is_el_out) {
+          var new_group_id =  ui.item.prevAll(".group").attr("id");
+          if (new_group_id == "0")
+            new_group_id = "";
+          updateSubscriptionGroup(subs_id, new_group_id);
+        }
+        else {
+          // remove subscription
+          ui.item.remove();
+          removeSubscription(subs_id);
+        }
+        toggleSubscriptionButton(true);
+     },
+     activate: function(event, ui) {
+        //console.log(ui);
+        toggleSubscriptionButton(false);
+     },
+     out: function(event, ui) {
+      is_el_out = true; 
+     },
+     over: function(event, ui) {
+       is_el_out = false;
+     }
+   });
+
+   $("ul.nav-list").disableSelection(); 
 });
 
 

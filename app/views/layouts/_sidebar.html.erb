@@ -5,6 +5,11 @@
 <% end %>
 <div class="spacer">&nbsp;</div>
 <div class="container-fluid">
-<a id="trigger" href="#subscriptionModal" class="btn btn-large btn-primary" data-toggle="modal">Add subscription...</a>
+<a id="trigger" href="#subscriptionModal" class="btn btn-large btn-primary" data-toggle="modal">
+  <i class="icon-rss"></i>
+  Add subscription...
+</a>
 </div>
-
+<div class="feed-link-template">
+  <%= label_to_li("template", "template" , 0, 1 ) %>
+</div>

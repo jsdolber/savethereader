@@ -3,7 +3,9 @@ class Subscription < ActiveRecord::Base
   belongs_to :user
   belongs_to :feed
   belongs_to :subscription_group
+  has_many :readentry, :dependent => :destroy
   validates_presence_of :feed_id, :user_id
+  validates_uniqueness_of :feed_id, :scope => :user_id
 
   def self.init(url, group, user_id)
     # first check if feed exists
@@ -19,7 +21,7 @@ class Subscription < ActiveRecord::Base
   def unread_count
     r_entries = Readentry.where(:user_id => self.user.id, :subscription_id => self.id).collect {|re| re.entry_id }
     entries = feed.entries.all.collect { |entry| entry.id } #watch out for scaling issues
-    (entries - r_entries).count 
+    (entries - r_entries).count
   end
 
 end
