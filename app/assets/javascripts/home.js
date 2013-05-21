@@ -1,7 +1,7 @@
 var bindInviewEntries;
 var bindSubscriptionNavigation;
 var bindSubscriptionGroupList;
-
+var showUnread = false;
 $(document).ready(function(){
    
    $('a.hook').bind('inview', function(e,visible) {
@@ -10,7 +10,6 @@ $(document).ready(function(){
      }
    });
 
-   $("#modal-err").hide();
 
    bindSubscriptionGroupList = function() {
         $('.subscription-group').bind('click', function() {
@@ -44,9 +43,13 @@ $(document).ready(function(){
    }
    bindSubscriptionNavigation();
 
+   // sidebar refresh
+   setInterval(loadSidebar, 120 * 1000);
+
    // initial subscription reading
    $('.feed-link').first().click();
    // subscription creation
+   $("#modal-err").hide();
    $(".new-group .btn").tooltip();
    $('#new-group-link').click(function(){
      $("div.group-list").hide();
@@ -270,7 +273,7 @@ $(document).ready(function(){
         }
     }
 
-   // sidebar drag
+   // sidebar group change and subs remove 
    var is_el_out = false;
    $("ul.nav-list").sortable({ 
      cancel: ".group", 
@@ -301,7 +304,14 @@ $(document).ready(function(){
      }
    });
 
-   $("ul.nav-list").disableSelection(); 
+   $("ul.nav-list").disableSelection();
+
+   // navigation bar actions
+   $(".btn-show-unread").click(function(){
+      showUnread = !$(this).hasClass("active");
+      $(this).text(showUnread? "Show Read" : "Show Unread");
+      loadSubscription($(".feed-link.active").attr("id"));
+   });
 });
 
 

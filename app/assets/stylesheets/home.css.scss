@@ -1,7 +1,7 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.bs-docs-example {
+.entry-content {
   position: relative;
   margin: 15px 0;
   padding: 39px 19px 14px;
@@ -28,3 +28,5 @@
 div.new-group {display:none;}
 #new-group-name {width: 60px;}
 .new-group .btn {margin-bottom:10px;}
+
+.btn-grp-toolbar {margin-right:100px;}

@@ -1,18 +1,26 @@
 <% if @entries.all.count>0 -%>
   var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
  <% if params[:page].to_i == 0 %>
-   $('div.feed-view').html(feed_html);
+    $('div.feed-view').html(feed_html);
+    window.scrollTo(0, 0);
  <% else %>
     $('div.feed-view').append(feed_html);
  <% end %>
  $('a.hook').attr('href', '<%= subscription_path(id: @subscription_id, format: :js, page: (params[:page] || 1).to_i + 1, per_page: params[:per_page] || 15) %>').show();
  bindInviewEntries();
- $(".entry.read").hide();
- window.scrollTo(0, 0);
- if ($(".entry.read").length > 6 && $(".entry.unread").length < 15) {
+ if (!showUnread) {
+  $(".entry.read").hide();
+  if ($(".entry.read").length > 6 && $(".entry.unread").length < 15) {
    $.getScript($('a.hook').attr("href"));
    $(".entry.read").remove();
+  }
  }
-<% else -%>
+ else {
+   $(".entry.read").fadeTo(0, 0.5);
+ }
+ <% else -%>
  $('a.hook').hide();
+ if ($(".feed-view").children().length == 0 && $("#no-entries-banner").length == 0)
+    $("#overview").append("<div id='no-entries-banner' class='hero-unit'><h3>Nothing new here...</h3></div>");
+
 <% end -%>

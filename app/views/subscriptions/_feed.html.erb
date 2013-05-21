@@ -1,8 +1,7 @@
 <% @entries.each do |entry| %>
   <section class="entry <%= entry.is_read(@user_id)? 'read' : 'unread' %>" id="<%= entry.id %>">
   <h3><a href="<%= h(entry.url) %>" class="title-link" target="_blank"><%= h(entry.title) %></a></h3>
-  <p><%= entry.summary.html_safe unless entry.content.nil? %></p>
-  <div class="bs-docs-example">
+  <div class="entry-content">
     <div class="tabbable" style="margin-bottom: 18px;">
       <%= entry.content.nil?? entry.summary.html_safe : entry.content.html_safe %>
     </div> <!-- /tabbable -->
