@@ -1,4 +1,20 @@
-<div class="feed-view"></div>
-<a class="hook">Read more<i class="icon-camera-repeat icon-2x"></i></a>
+<div class="span3">
+<div class="sidebar-nav-fixed">
+  <div class="row-fluid">
+    <h1>Save The Reader</h1>
+    <p class="lead">A minimalistic RSS reader.</p>
+  </div>
+  <div id="subscription-sidebar" class="row-fluid">
+      <%= render 'layouts/sidebar' %>
+  </div>         
+</div>  <!--! end of .sidebar-nav-fixed-->
+</div>  <!--! end of .span3-->
+<div class="span9 span-fixed-sidebar">
+  <div class="jumbotron subhead" id="overview">
+    <div class="feed-view"></div>
+    <a class="hook">Read more<i class="icon-camera-repeat icon-2x"></i></a>
+    <%= render 'new_subscription' %>
+  </div>
+</div>
 
-<%= render 'new_subscription' %>
+

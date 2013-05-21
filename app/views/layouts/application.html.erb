@@ -22,24 +22,9 @@
   </div>
   <div class="container-fluid">
      <div class="row-fluid row">
-       <div class="span3">
-          <div class="sidebar-nav-fixed">
-            <div class="row-fluid">
-              <h1>Save The Reader</h1>
-              <p class="lead">A minimalistic RSS reader.</p>
-            </div>
-            <div id="subscription-sidebar" class="row-fluid">
-                <%= render 'layouts/sidebar' %>
-            </div>         
-          </div>  <!--! end of .sidebar-nav-fixed-->
-        </div>  <!--! end of .span3-->
-        <div class="span9 span-fixed-sidebar">
-            <div class="jumbotron subhead" id="overview">
-                <%= render 'layouts/messages' %>
-                <%= yield %>
-            </div>
-        </div>
-       </div> <!--! end of .row-fluid-->
+        <%= render 'layouts/messages' %>
+        <%= yield %>
+      </div> <!--! end of .row-fluid-->
      </div> <!--! end of .container -->
     </body>
   </html>

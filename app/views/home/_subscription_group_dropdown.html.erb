@@ -1,12 +1,14 @@
-<div class="btn-group">
+<div class="btn-group group-list">
     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
          <span id="selectionGroup">Group...</span>
          <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
       <li class="nav-header">Groups</li>
-      <% @groups.each do |group| %>      
-       <li><a class="subscription-group" href="#"><%= group.name %></a></li>
-      <% end %>
+      <% @groups.each_with_index do |group, idx| %>      
+        <li class="<%= "last" if idx == @groups.length - 1 %>"><a class="subscription-group" href="#"><%= group.name %></a></li>
+     <% end %>
+     <li class="divider"></li>
+     <li><a id="new-group-link" href="#">New Group...</a></li>
      </ul>
 </div>

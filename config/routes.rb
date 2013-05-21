@@ -14,6 +14,7 @@ Savethereader::Application.routes.draw do
 
   resources :subscriptions
   resources :readentries
+  resources :subscription_groups
 
   # Sample resource route with options:
   #   resources :products do
