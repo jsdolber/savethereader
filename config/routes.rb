@@ -6,6 +6,7 @@ Savethereader::Application.routes.draw do
 
   # Sample of regular route:
   match 'subscription_sidebar' => 'home#subscription_sidebar', :as => :subscription_sidebar, :via => :get
+  match 'subscriptions/set_show_read' => 'subscriptions#set_show_read', :as => :set_show_read, :via => :post
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:

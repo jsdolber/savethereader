@@ -16,7 +16,7 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions/1.json
   def show
     @subscription = Subscription.find(params[:id])
-    @entries = @subscription.feed.entries.order("created_at DESC").paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
+    @entries = @subscription.get_entries(params[:page], params[:per_page], show_read)
     @subscription_id = @subscription.id
     @user_id = current_user.id
     respond_to do |format|
@@ -84,4 +84,26 @@ class SubscriptionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def set_show_read
+    show_read_toggle(to_boolean(params[:state]))
+
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
+
+  private
+  def show_read
+    session[:show_read]
+  end
+
+  def show_read_toggle(state)
+    session[:show_read] = state
+  end
+
+  def to_boolean(str)
+      str == 'true'
+  end
+
 end

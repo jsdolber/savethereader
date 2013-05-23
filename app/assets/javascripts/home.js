@@ -1,7 +1,7 @@
 var bindInviewEntries;
 var bindSubscriptionNavigation;
 var bindSubscriptionGroupList;
-var showUnread = false;
+var showRead = false;
 $(document).ready(function(){
    
    $('a.hook').bind('inview', function(e,visible) {
@@ -50,6 +50,7 @@ $(document).ready(function(){
    $('.feed-link').first().click();
    // subscription creation
    $("#modal-err").hide();
+   $("#body-err").hide();
    $(".new-group .btn").tooltip();
    $('#new-group-link').click(function(){
      $("div.group-list").hide();
@@ -94,9 +95,10 @@ $(document).ready(function(){
       .done(function(data) { 
         eval(data);
       })
-      .fail(function() {
-        $("#modal-err .msg").text('We were unable to serve this subscription.');
-        $("#modal-err").show(); 
+      .fail(function(data) {
+        if (data.status == 200) return; // not json 
+        $("#body-err .msg").text('We were unable to serve this subscription.');
+        $("#body-err").show(); 
       })
       .always(function(data, textStatus) { }); 
    }
@@ -257,7 +259,7 @@ $(document).ready(function(){
 
     function toggleSubscriptionButton(active) {
         var el = $("a#trigger");
-        var subLbl = "Add subscription...";
+        var subLbl = "Add subscription";
         var remLbl = "Drop here to remove";
         if (!active) {
           el.addClass("btn-danger");
@@ -308,9 +310,19 @@ $(document).ready(function(){
 
    // navigation bar actions
    $(".btn-show-unread").click(function(){
-      showUnread = !$(this).hasClass("active");
-      $(this).text(showUnread? "Show Read" : "Show Unread");
-      loadSubscription($(".feed-link.active").attr("id"));
+      showRead = !$(this).hasClass("active");
+      $.post("/subscriptions/set_show_read.json",
+      {
+         'state': showRead
+      })
+      .done(function(data) { 
+        $(".btn-show-unread").text(showRead? "Show only unread" : "Show read");
+        loadSubscription($(".feed-link.active").attr("id"));
+      })
+      .fail(function() {
+        $("#body-err .msg").text('We can\'t show that right now.');
+        $("#body-err").show(); 
+      })
    });
 });
 

@@ -19,9 +19,30 @@ class Subscription < ActiveRecord::Base
   end
 
   def unread_count
-    r_entries = Readentry.where(:user_id => self.user.id, :subscription_id => self.id).collect {|re| re.entry_id }
+    r_entries = read_entries.collect {|re| re.entry_id }
     entries = feed.entries.all.collect { |entry| entry.id } #watch out for scaling issues
     (entries - r_entries).count
+  end
+
+  def get_entries(page_num, per_page, show_read)
+    return get_unread_entries(page_num, per_page) unless show_read
+    get_all_entries(page_num, per_page)
+  end
+
+  private
+  def get_all_entries(page_num, per_page)
+    self.feed.entries.paginate(page: page_num || 1, per_page: per_page || 15, order: 'created_at DESC')
+  end
+
+  def get_unread_entries(page_num, per_page)
+    return nil if self.unread_count == 0
+    r_entries = read_entries.collect {|re| re.entry_id }
+    q_conditions = r_entries.count == 0 ? nil :  ['id not in (?)', r_entries]
+    self.feed.entries.paginate(page: page_num || 1, per_page: per_page || 15, conditions: q_conditions, order: 'created_at DESC')
+  end
+
+  def read_entries
+     Readentry.where(:user_id => self.user.id, :subscription_id => self.id)
   end
 
 end

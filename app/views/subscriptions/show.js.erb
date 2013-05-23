@@ -1,4 +1,4 @@
-<% if @entries.all.count>0 -%>
+<% if !@entries.nil? && @entries.all.count > 0 -%>
   var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
  <% if params[:page].to_i == 0 %>
     $('div.feed-view').html(feed_html);
@@ -8,7 +8,7 @@
  <% end %>
  $('a.hook').attr('href', '<%= subscription_path(id: @subscription_id, format: :js, page: (params[:page] || 1).to_i + 1, per_page: params[:per_page] || 15) %>').show();
  bindInviewEntries();
- if (!showUnread) {
+ if (!showRead) {
   $(".entry.read").hide();
   if ($(".entry.read").length > 6 && $(".entry.unread").length < 15) {
    $.getScript($('a.hook').attr("href"));
@@ -19,8 +19,16 @@
    $(".entry.read").fadeTo(0, 0.5);
  }
  <% else -%>
+ $('a.hook').attr('href', '');
  $('a.hook').hide();
- if ($(".feed-view").children().length == 0 && $("#no-entries-banner").length == 0)
-    $("#overview").append("<div id='no-entries-banner' class='hero-unit'><h3>Nothing new here...</h3></div>");
+ if (<%= params[:page].to_i == 0 %>) {
+   $("div.feed-view").html('');
+    if ($("#no-entries-banner").length == 0)
+    $("#overview").append("<div id='no-entries-banner' class='hero-unit'><h3>...and that's all there is for now!</h3></div>");
+ }
 
 <% end -%>
+showRead = <%= session[:show_read] %>;
+showRead ?  $(".btn-show-unread").addClass("active") :  $(".btn-show-unread").removeClass("active");
+$(".btn-show-unread").text(showRead? "Show only unread" : "Show read");
+

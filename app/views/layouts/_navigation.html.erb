@@ -31,9 +31,9 @@
   <% end %> 
  </ul>
 </div>
-<% if params[:controller] == 'home' %>
+<% if !@user.nil? && params[:controller] == 'home' %>
 <div class="btn-grp-toolbar pull-right">
   <a class="btn btn-action btn-show-unread" data-toggle="button" href="#">
-  </i>Show Unread</a>
+  </i>Show read</a>
 </div>
 <% end %>

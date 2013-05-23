@@ -4,6 +4,7 @@
   <div class="entry-content">
     <div class="tabbable" style="margin-bottom: 18px;">
       <%= entry.content.nil?? entry.summary.html_safe : entry.content.html_safe %>
+      <div class="row pull-right"><%= Time.parse(h(entry.published)).strftime("%FT%R") %></div>
     </div> <!-- /tabbable -->
   </div>
 </section>
