@@ -1,8 +1,8 @@
 module HomeHelper
   def display_public_sidebar_feeds
-    content_tag(:ul, :class => "nav nav-list bs-docs-sidenav sidebar-nav sidebar-nav-fixed affix-top") do
+    content_tag(:ul, :class => "nav nav-list sidebar-nav affix-top") do
       concat(label_to_li_grp("Tech", 0)) +
-      ['Coding Horror', 'Hacker News', 'Techcrunch'].collect do |member|
+      ['Stack Overflow', 'Hacker News', 'Techcrunch'].collect do |member|
         concat(label_to_li(member, '#', nil, nil))
       end +
       concat(label_to_li_grp("General", 0)) +

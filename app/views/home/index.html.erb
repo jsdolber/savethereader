@@ -11,8 +11,14 @@
 </div>  <!--! end of .span3-->
 <div class="span9 span-fixed-sidebar">
   <div class="jumbotron subhead" id="overview">
-    <div class="feed-view"></div>
-    <a class="hook"><i class="icon-spinner icon-spin icon-large"></i> &nbsp;</a>
+    <div class="feed-view">
+      <% if !user_signed_in? %>
+        <%= render(partial: 'subscriptions/feed', object: @entries) %> 
+      <% end %> 
+    </div>
+    <% if user_signed_in? %>
+      <a class="hook"><i class="icon-spinner icon-spin icon-large"></i> &nbsp;</a>
+    <% end %>
     <%= render 'new_subscription' %>
   </div>
 </div>

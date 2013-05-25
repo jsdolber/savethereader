@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Save The Reader" %></title>
-    <meta name="description" content="">
+    <meta name="description" content="A minimalistic RSS reader.">
     <meta name="author" content="">
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
@@ -29,7 +29,9 @@
        </div> 
      </div>
      <div class="row-fluid row">
-        <%= yield %>
+       <div class="<%= get_classes_for_container %>">
+          <%= yield %>
+        </div> 
       </div> <!--! end of .row-fluid-->
      </div> <!--! end of .container -->
     </body>

@@ -50,6 +50,7 @@ $(document).ready(function(){
    $('.feed-link').first().click();
    // subscription creation
    $("#modal-err").hide();
+   $("#modal-info").hide();
    $("#body-err").hide();
    $(".new-group .btn").tooltip();
    $('#new-group-link').click(function(){
@@ -69,8 +70,17 @@ $(document).ready(function(){
 
    function createSubscription(url, group) {
       isSaving(true);
-      $.post("/subscriptions.json",
-              initSubscription(url, group) 
+      $.ajax({
+            url: "/subscriptions.json",
+            data: initSubscription(url, group),
+            type: "POST",
+            statusCode: {
+              401: function() {
+                $("#modal-err").hide();
+                $("#modal-info").show();
+             }
+            }
+         }
       )
       .done(function(data) { 
         $('#subscriptionModal').modal('hide'); 
@@ -80,7 +90,7 @@ $(document).ready(function(){
         $("#modal-err .msg").text('We were unable to create this subscription.');
         $("#modal-err").show(); 
       })
-      .always(function(data, textStatus) { isSaving(false); }); 
+      .always(function(data, status) { isSaving(false); }); 
    }
 
    function initSubscription(url, group) {
@@ -90,21 +100,27 @@ $(document).ready(function(){
    }
 
    function loadSubscription(subs_id) {
-      $.get("/subscriptions/" + subs_id + ".js"
-      )
-      .done(function(data) { 
-        eval(data);
+      if (subs_id === undefined) return;
+
+      $.ajax({
+        url: "/subscriptions/" + subs_id + ".js",
+        type: "GET"
+        //dataType: "script"
+      })
+      .done(function(data) {
+        //eval(data);
       })
       .fail(function(data) {
         if (data.status == 200) return; // not json 
         $("#body-err .msg").text('We were unable to serve this subscription.');
         $("#body-err").show(); 
       })
-      .always(function(data, textStatus) { }); 
+      .always(function(data, textStatus) {  }); 
    }
 
 
    function removeSubscription(subs_id) {
+     if (subs_id === undefined) return;
      $.ajax({url: "/subscriptions/" + subs_id + ".json", 
              type: 'DELETE'
      })
@@ -114,6 +130,7 @@ $(document).ready(function(){
    }
 
    function updateSubscriptionGroup(subs_id, group_id) {
+     if (subs_id === undefined) return;
      $.ajax({url: "/subscriptions/" + subs_id + ".json", 
              type: 'PUT',
              data: {
@@ -128,6 +145,7 @@ $(document).ready(function(){
    }
 
    function createSubscriptionGroup(group_name) {
+     if (group_name === undefined) return;
      $.post("/subscription_groups.json", 
              {
               'subscription_group[name]' : group_name
@@ -143,8 +161,10 @@ $(document).ready(function(){
    }
 
    function loadSidebar() {
-      $.get("/subscription_sidebar.js"
-      )
+      $.ajax({ url: "/subscription_sidebar.js"
+      , statusCode: {
+              401: function() {
+             }}})
       .done(function(data) { 
         eval(data);
       })

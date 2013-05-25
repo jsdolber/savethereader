@@ -95,7 +95,7 @@ class SubscriptionsController < ApplicationController
 
   private
   def show_read
-    session[:show_read]
+    session[:show_read] || false
   end
 
   def show_read_toggle(state)

@@ -22,8 +22,10 @@ class Feed < ActiveRecord::Base
 
   def self.create_and_update(url)
     #first try to get the feeds
+    url = Feedbag.find(url).first
     feedzr = Feedzirra::Feed.fetch_and_parse(url)
-    return nil if feedzr == nil || feedzr == 404
+    return nil if feedzr.nil? || feedzr == 404 || feedzr.empty?
+
     feed = Feed.create :url => url, :title => feedzr.title
     # get the first dry run
     feed.update_feed_db(feedzr.sanitize_entries!)

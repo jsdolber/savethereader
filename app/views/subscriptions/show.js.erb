@@ -1,5 +1,5 @@
-<% if !@entries.nil? && @entries.all.count > 0 -%>
-  var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
+<% if !@entries.nil? && @entries.all.count > 0 %>
+    var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
  <% if params[:page].to_i == 0 %>
     $('div.feed-view').html(feed_html);
     window.scrollTo(0, 0);
@@ -27,8 +27,8 @@
     $("#overview").append("<div id='no-entries-banner' class='hero-unit'><h3>...and that's all there is for now!</h3></div>");
  }
 
-<% end -%>
-showRead = <%= session[:show_read] %>;
+<% end %>
+showRead = <%= show_read %>;
 showRead ?  $(".btn-show-unread").addClass("active") :  $(".btn-show-unread").removeClass("active");
 $(".btn-show-unread").text(showRead? "Show only unread" : "Show read");
 
