@@ -21,15 +21,20 @@ class Feed < ActiveRecord::Base
   end
 
   def self.create_and_update(url)
-    #first try to get the feeds
-    url = Feedbag.find(url).first
-    feedzr = Feedzirra::Feed.fetch_and_parse(url)
-    return nil if feedzr.nil? || feedzr == 404 || feedzr.empty?
+    begin
+      #first try to get the feeds
+      url = Feedbag.find(url).first
+      feedzr = Feedzirra::Feed.fetch_and_parse(url)
+      return nil if feedzr.nil? || feedzr.class.to_s.split("::").first != "Feedzirra"
 
-    feed = Feed.create :url => url, :title => feedzr.title
-    # get the first dry run
-    feed.update_feed_db(feedzr.sanitize_entries!)
-    feed
+      feed = Feed.create :url => url, :title => feedzr.title
+      # get the first dry run
+      feed.update_feed_db(feedzr.sanitize_entries!)
+      feed
+    rescue Exception => e
+      logger.error('problem creating feed: ' + e.message)
+      nil
+    end
   end
   
   def get_new_entry_count

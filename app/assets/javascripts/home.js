@@ -1,8 +1,12 @@
 var bindInviewEntries;
-var bindSubscriptionNavigation;
-var bindSubscriptionGroupList;
 var showRead = false;
+var showUnreadText = "<i class='icon-eye-closed'></i> Show only unread";
+var showReadText = "<i class='icon-eye-open'></i> Show read";
+var updateSubscriptionGroup;
+var removeSubscription;
+
 $(document).ready(function(){
+   'use strict'; 
    
    $('a.hook').bind('inview', function(e,visible) {
     if( visible ) {
@@ -11,14 +15,6 @@ $(document).ready(function(){
    });
 
 
-   bindSubscriptionGroupList = function() {
-        $('.subscription-group').bind('click', function() {
-        $("#selectionGroup").html($(this).text())
-      });
-   };
-
-   bindSubscriptionGroupList();
-  
    $("#subs-url").bind('keyup', function() {
     if (validateUrl($(this).val())) {
       toggleSaveBtn(true);
@@ -33,22 +29,7 @@ $(document).ready(function(){
                         $("#selectionGroup").html()); 
    });
 
-   // subscription onclick functionality
-   bindSubscriptionNavigation = function() {
-    $('.feed-link').bind('click', function(){
-       $('.feed-link').removeClass('active');
-       $(this).addClass('active');
-       loadSubscription($(this).attr("id"));
-    });   
-   }
-   bindSubscriptionNavigation();
-
-   // sidebar refresh
-   setInterval(loadSidebar, 120 * 1000);
-
-   // initial subscription reading
-   $('.feed-link').first().click();
-   // subscription creation
+  // subscription creation
    $("#modal-err").hide();
    $("#modal-info").hide();
    $("#body-err").hide();
@@ -99,27 +80,8 @@ $(document).ready(function(){
       return {url: url};
    }
 
-   function loadSubscription(subs_id) {
-      if (subs_id === undefined) return;
 
-      $.ajax({
-        url: "/subscriptions/" + subs_id + ".js",
-        type: "GET"
-        //dataType: "script"
-      })
-      .done(function(data) {
-        //eval(data);
-      })
-      .fail(function(data) {
-        if (data.status == 200) return; // not json 
-        $("#body-err .msg").text('We were unable to serve this subscription.');
-        $("#body-err").show(); 
-      })
-      .always(function(data, textStatus) {  }); 
-   }
-
-
-   function removeSubscription(subs_id) {
+   removeSubscription = function(subs_id) {
      if (subs_id === undefined) return;
      $.ajax({url: "/subscriptions/" + subs_id + ".json", 
              type: 'DELETE'
@@ -129,7 +91,7 @@ $(document).ready(function(){
       })
    }
 
-   function updateSubscriptionGroup(subs_id, group_id) {
+   updateSubscriptionGroup = function(subs_id, group_id) {
      if (subs_id === undefined) return;
      $.ajax({url: "/subscriptions/" + subs_id + ".json", 
              type: 'PUT',
@@ -160,15 +122,6 @@ $(document).ready(function(){
       .always(function(data, textStatus) { toggleGroupSaveControls(false); }); 
    }
 
-   function loadSidebar() {
-      $.ajax({ url: "/subscription_sidebar.js"
-      , statusCode: {
-              401: function() {
-             }}})
-      .done(function(data) { 
-        eval(data);
-      })
-   }
 
    function toggleSaveBtn(enabled) {
       if (enabled) {
@@ -218,8 +171,6 @@ $(document).ready(function(){
    }
 
     // scroll logic
-    'use strict';
-
     var lastScrollTop = 0,
         st,
         direction;
@@ -265,78 +216,25 @@ $(document).ready(function(){
       $.post("/readentries.json",
       {
          'readentry[entry_id]': entryEl.attr("id"),
-         'readentry[subscription_id]': $(".feed-link.active").attr("id")
+         'readentry[subscription_id]': getSelectedSubscriptionId()
       })
       .done(function(data) { 
         entryEl.fadeTo(0, 0.5);
         entryEl.removeClass("unread");
         entryEl.addClass("read");
-        var unread_cnt = parseInt($(".feed-link.active .unreadcnt").text());
-        if (unread_cnt > 0)
-          $(".feed-link.active .unreadcnt").html(unread_cnt - 1);
+        decrementActiveReadCount();
       })
     }
 
-    function toggleSubscriptionButton(active) {
-        var el = $("a#trigger");
-        var subLbl = "Add subscription";
-        var remLbl = "Drop here to remove";
-        if (!active) {
-          el.addClass("btn-danger");
-          el.find("i").removeClass("icon-rss");
-          el.find("i").addClass("icon-trash");
-          el.html(el.html().replace(subLbl, remLbl));
-        }
-        else {
-          el.removeClass("btn-danger");
-          el.find("i").addClass("icon-rss");
-          el.find("i").removeClass("icon-trash");
-          el.html(el.html().replace(remLbl, subLbl));
-        }
-    }
-
-   // sidebar group change and subs remove 
-   var is_el_out = false;
-   $("ul.nav-list").sortable({ 
-     cancel: ".group", 
-     beforeStop: function( event, ui ) {
-        var subs_id = ui.item.attr("id");
-        if (!is_el_out) {
-          var new_group_id =  ui.item.prevAll(".group").attr("id");
-          if (new_group_id == "0")
-            new_group_id = "";
-          updateSubscriptionGroup(subs_id, new_group_id);
-        }
-        else {
-          // remove subscription
-          ui.item.remove();
-          removeSubscription(subs_id);
-        }
-        toggleSubscriptionButton(true);
-     },
-     activate: function(event, ui) {
-        //console.log(ui);
-        toggleSubscriptionButton(false);
-     },
-     out: function(event, ui) {
-      is_el_out = true; 
-     },
-     over: function(event, ui) {
-       is_el_out = false;
-     }
-   });
-
-   $("ul.nav-list").disableSelection();
-
    // navigation bar actions
-   $(".btn-show-unread").click(function(){
+   $(".btn-show-unread").bind('click',function(){
       showRead = !$(this).hasClass("active");
       $.post("/subscriptions/set_show_read.json",
       {
          'state': showRead
       })
       .done(function(data) { 
-        $(".btn-show-unread").text(showRead? "Show only unread" : "Show read");
+        $(".btn-show-unread").html(showRead? showUnreadText : showReadText);
         loadSubscription($(".feed-link.active").attr("id"));
       })
       .fail(function() {

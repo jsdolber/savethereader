@@ -30,5 +30,5 @@
 <% end %>
 showRead = <%= show_read %>;
 showRead ?  $(".btn-show-unread").addClass("active") :  $(".btn-show-unread").removeClass("active");
-$(".btn-show-unread").text(showRead? "Show only unread" : "Show read");
+$(".btn-show-unread").html(showRead? showUnreadText : showReadText);
 

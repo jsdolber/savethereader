@@ -3,7 +3,7 @@ class SubscriptionGroup < ActiveRecord::Base
   has_many :subscriptions , :foreign_key => :group_id
   belongs_to :user
   
-  validates :name, :presence => true, :length => { :in => 3..12 }
+  validates :name, :presence => true, :length => { :in => 3..20 }
   validates :user_id, :presence => true
 
 end

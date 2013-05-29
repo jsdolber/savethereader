@@ -85,6 +85,24 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  # GET /subscriptions/import
+  def import
+
+  end
+
+  # POST /subscriptions/upload_import
+  def upload_import
+    respond_to do |format|
+      if Subscription.import(params[:file], current_user.id)
+        format.html { redirect_to root_path, notice: 'Subscriptions were successfully imported.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "import", error: 'Unable to process import.' }
+        format.json { render json: { message: "Unable to process import." }, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def set_show_read
     show_read_toggle(to_boolean(params[:state]))
 

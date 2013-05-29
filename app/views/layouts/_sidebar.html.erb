@@ -1,7 +1,7 @@
 <% if @subs_groups.nil? %>
   <%= display_public_sidebar_feeds.html_safe %>
 <% else %>
-  <%= display_user_sidebar_feeds(@subs_groups, @subs_ungroup).html_safe %>
+  <%= h display_user_sidebar_feeds(@subs_groups, @subs_ungroup) %>
 <% end %>
 <div class="spacer">&nbsp;</div>
 <div class="container-fluid">

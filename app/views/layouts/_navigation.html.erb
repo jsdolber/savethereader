@@ -9,7 +9,7 @@
  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
    <i class="icon-user"></i>
    <% if user_signed_in? %>
-     <%= @user.email%>
+     <%= current_user.email%>
    <% else %>
      Register/Login
    <% end %>
@@ -20,22 +20,20 @@
   <li>
     <%= link_to('Edit account', edit_user_registration_path) %>
   </li>
-  <% else %>
-  <li>
-    <%= link_to('Sign up', new_user_registration_path)  %>
-  </li>
-  <% end %>
   <li class="divider"></li>
-  <% if user_signed_in? %>
-    <li><%= link_to('Logout', destroy_user_session_path, :method=>'delete') %></li>
+  <li><%= link_to('Import', { :controller => '/subscriptions', :action => 'import' }) %></li>
+  <li class="divider"></li>
+  <li><%= link_to('Logout', destroy_user_session_path, :method=>'delete') %></li>
   <% else %>
-    <li><%= link_to('Login', new_user_session_path)  %></li>
-  <% end %> 
+  <li><%= link_to('Sign up', new_user_registration_path)  %> </li>
+  <li class="divider"></li>
+  <li><%= link_to('Login', new_user_session_path)  %></li>
+  <% end %>
  </ul>
 </div>
-<% if !@user.nil? && params[:controller] == 'home' %>
+<% if user_signed_in? && params[:controller] == 'home' %>
 <div class="btn-grp-toolbar pull-right">
   <a class="btn btn-action btn-show-unread" data-toggle="button" href="#">
-  </i>Show read</a>
+  <i class="icon-eye-open"></i>Show read</a>
 </div>
 <% end %>
