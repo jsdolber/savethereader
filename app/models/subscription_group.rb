@@ -5,5 +5,6 @@ class SubscriptionGroup < ActiveRecord::Base
   
   validates :name, :presence => true, :length => { :in => 3..20 }
   validates :user_id, :presence => true
+  validates_uniqueness_of :name, :scope => :user_id
 
 end

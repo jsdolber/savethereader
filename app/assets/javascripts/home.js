@@ -114,10 +114,16 @@ $(document).ready(function(){
              }
      )
       .done(function(data) {
+        var li = "<li class='last'><a class='subscription-group' href='#'>" + group_name + "</a></li>";
         var last_el = $(".group-list ul li.last");
-        last_el.after("<li class='last'><a class='subscription-group' href='#'>" + group_name + "</a></li>");
-        last_el.removeClass('last');
-        bindSubscriptionGroupList(); 
+        if (last_el.length == 0) {
+          $(".group-list ul .divider").before(li);
+        }
+        else {
+          last_el.after(li);
+          last_el.removeClass('last');
+        }
+        bindSubscriptionGroupListClick(); 
       })
       .always(function(data, textStatus) { toggleGroupSaveControls(false); }); 
    }

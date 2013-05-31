@@ -40,4 +40,9 @@ class Feed < ActiveRecord::Base
   def get_new_entry_count
     Feedzirra::Feed.fetch_and_parse(self.url).entries.count
   end
+
+  def self.find_by_url_with_feedbag(url)
+    feed = Feed.find_by_url(url)
+    feed = Feed.find_by_url(Feedbag.find(url).first) if feed.nil?
+  end
 end

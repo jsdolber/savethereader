@@ -13,10 +13,19 @@
   <div class="jumbotron subhead" id="overview">
     <div class="feed-view">
       <% if !user_signed_in? %>
-        <%= render(partial: 'subscriptions/feed', object: @entries) %> 
+        <%= render(partial: 'subscriptions/feed', object: @entries) %>
+      <% else %>
+        <% if @subscription_count == 0 %>
+          <div class="hero-unit">
+              <h2>Welcome!</h2> <br/>
+              <p>Thank you for registering. <br/>
+              Start by adding some subscriptions or import your things from Google Reader.</p> <br/>
+              <p><a class="btn btn-primary btn-large" href="<%= url_for(:controller => :subscriptions, :action => :import) %>">Import subscriptions</a></p>
+          </div> 
+        <% end %> 
       <% end %> 
     </div>
-    <% if user_signed_in? %>
+    <% if user_signed_in? && @subscription_count > 0 %>
       <a class="hook"><i class="icon-spinner icon-spin icon-large"></i> &nbsp;</a>
     <% end %>
     <%= render 'new_subscription' %>

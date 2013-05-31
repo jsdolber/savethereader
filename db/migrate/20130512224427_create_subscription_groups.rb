@@ -6,11 +6,5 @@ class CreateSubscriptionGroups < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    SubscriptionGroup.create :name => "TECH"
-    SubscriptionGroup.create :name => "COMICS"
-    SubscriptionGroup.create :name => "NEWS"
-    SubscriptionGroup.create :name => "BLOGS"
-
   end
 end

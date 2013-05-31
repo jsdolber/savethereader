@@ -12,4 +12,9 @@ class UserTest < ActiveSupport::TestCase
     assert user, "couldn't save user with mandatory fields"
   end
 
+  test "don't save with duplicate email" do
+    user = User.new(:email => users(:user1).email, :password => "1234", :password_confirmation => "1234")
+    assert !user.save, "created user with duplicate email"
+  end
+
 end

@@ -1,5 +1,5 @@
 var bindSubscriptionNavigation;
-var bindSubscriptionGroupList;
+var bindSubscriptionGroupListClick;
 var getSelectedSubscriptionId;
 var setSelectedSubcription;
 var loadSidebar;
@@ -7,6 +7,7 @@ var updateActiveReadCount;
 var decrementActiveReadCount;
 var expandGroup;
 var collapseGroup;
+var loadSubscription;
 
 $(document).ready(function(){
    'use strict';
@@ -47,13 +48,13 @@ $(document).ready(function(){
         }
     }
 
-   bindSubscriptionGroupList = function() {
-        $('.subscription-group').bind('click', function() {
+   bindSubscriptionGroupListClick = function() {
+      $('.subscription-group').bind('click', function() {
         $("#selectionGroup").html($(this).text())
       });
    };
 
-   bindSubscriptionGroupList();
+   bindSubscriptionGroupListClick();
 
    expandGroup = function(groupEl){
       groupEl.nextUntil(".group").toggle(true);
@@ -150,7 +151,8 @@ $(document).ready(function(){
     // set initial group status
     $("li.group").each(function(){
       var groupId = $(this).attr('id');
-      if (getGroupCollapsed(groupId)) {
+      if (getGroupCollapsed(groupId) == "true") {
+        console.log("now here with groupId " + 1);
           collapseGroup($(this));
       }
     });
@@ -183,10 +185,13 @@ $(document).ready(function(){
       .always(function(data, textStatus) {  }); 
    }
 
+   var intervalId = null;
+
    loadSidebar = function() {
-      $.ajax({ url: "/subscription_sidebar.js"
+      $.ajax({ url: "/sidebar.js"
       , statusCode: {
               401: function() {
+                clearInterval(intervalId);
              }}})
       .done(function(data) { 
         eval(data);
@@ -196,12 +201,13 @@ $(document).ready(function(){
    $("ul.nav-list").disableSelection();
 
     // sidebar refresh
-    setInterval(loadSidebar, refreshIntervalInMinutes * 60 * 1000);
-
+    intervalId = setInterval(loadSidebar, refreshIntervalInMinutes * 60 * 1000);
+    
+    var selSubscription = getSelectedSubscriptionId();
     // initial subscription reading
-    if (null == getSelectedSubscriptionId()) {
+    if (null == selSubscription || $(".feed-link#" + selSubscription).length == 0) {
       setSelectedSubcription($('.feed-link').first().attr("id"));
     }
-    $(".feed-link#" + getSelectedSubscriptionId()).click();
 
+    $(".feed-link#" + selSubscription).click();
 });

@@ -13,6 +13,7 @@ class Entry < ActiveRecord::Base
     new_entry.url = entry.url
     new_entry.content = entry.content
     new_entry.published = entry.published
+    new_entry.author = entry.author
     new_entry
   end
 

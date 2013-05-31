@@ -21,12 +21,12 @@ module HomeHelper
             concat(label_to_li(subs.feed.title, subs.feed.url, subs.id, subs.unread_count))
           end  
         end      
-      end 
+      end unless subs_group.nil? || subs_group.empty? 
       concat(label_to_li_grp("Uncategorized", 0)) +
       subs_ungroup.collect do |subs|
          concat(label_to_li(subs.feed.title, subs.feed.url, subs.id, subs.unread_count))
-      end 
-    end unless (subs_ungroup.nil? || subs_ungroup.empty?)
+      end unless subs_ungroup.nil? || subs_ungroup.empty?
+    end 
   end
 
   def label_to_li(label, url, subs_id, unread_cnt)

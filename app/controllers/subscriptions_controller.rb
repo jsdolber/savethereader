@@ -111,6 +111,14 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  def sidebar
+    @subs_groups = current_user.subscription_groups
+    @subs_ungroup = current_user.subscriptions.where(:group_id => nil)
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
   def show_read
     session[:show_read] || false

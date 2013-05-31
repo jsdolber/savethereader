@@ -1,7 +1,7 @@
 <h2>Import from Google Reader</h2>
 
 <%= form_tag(url_for(:controller => :subscriptions, :action => :upload_import), :multipart => true, :method => :post) do %>
-  <div><%= label_tag "Select your subscription export file" %><br />
+  <div><%= label_tag "Select your subscription export xml file" %><br />
   <%= file_field_tag 'file[google]' %></div><br />
   <div><%= submit_tag "Upload" %></div>
 <% end %>

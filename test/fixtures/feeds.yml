@@ -1,2 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+stackoverflow: 
+ title: stackoverflow 
+ url: http://stackoverflow.com/feeds 
 
+reddit:
+  title: reddit
+  url: http://reddit.com/.rss

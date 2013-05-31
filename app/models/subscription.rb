@@ -10,7 +10,7 @@ class Subscription < ActiveRecord::Base
 
   def self.init(url, group, user_id)
     # first check if feed exists
-    feed = Feed.find_by_url(url)
+    feed = Feed.find_by_url_with_feedbag(url)
     feed = Feed.create_and_update url if feed.nil?
     # return if it didn't succeed creating feed
     return Subscription.new if feed.nil? 
@@ -21,7 +21,7 @@ class Subscription < ActiveRecord::Base
 
   def unread_count
     r_entries = read_entries.collect {|re| re.entry_id }
-    entries = feed.entries.all.collect { |entry| entry.id } #watch out for scaling issues
+    entries = self.feed.entries.where('created_at > ?', self.created_at - 12.hours).collect { |entry| entry.id } #watch out for scaling issues
     (entries - r_entries).count
   end
 
@@ -91,7 +91,7 @@ class Subscription < ActiveRecord::Base
 
   # validate methods
   def subscription_limit_reached
-    errors.add(:user_id, t("subscription limit reached")) unless Subscription.where(:user_id => self.user_id).count < 250
+    errors.add(:user_id, "subscription limit reached") unless Subscription.where(:user_id => self.user_id).count < 250
   end
 
 end
