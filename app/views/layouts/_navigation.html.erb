@@ -34,6 +34,11 @@
 <% if user_signed_in? && params[:controller] == 'home' %>
 <div class="btn-grp-toolbar pull-right">
   <a class="btn btn-action btn-show-unread" data-toggle="button" href="#">
-  <i class="icon-eye-open"></i>Show read</a>
+    <i class="icon-eye-open"></i> Show read
+  </a>
+  &nbsp;
+  <a class="btn btn-info btn-mark-all-read" data-toggle="button" href="#">
+    <i class="icon-eraser"></i> Mark all read
+  </a>
 </div>
 <% end %>

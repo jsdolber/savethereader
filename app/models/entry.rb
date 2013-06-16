@@ -1,7 +1,7 @@
 class Entry < ActiveRecord::Base
   attr_accessible :categories, :content, :feed_id, :published, :summary, :title, :url, :guid
 
-  validates_presence_of :feed_id, :title, :summary, :url, :published, :guid
+  validates_presence_of :feed_id, :title, :url, :guid
 
   validates_uniqueness_of :guid
 

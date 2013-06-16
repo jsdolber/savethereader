@@ -16,8 +16,6 @@ end
 
 while($running) do
   
-  # Replace this with your code
-  Rails.logger.auto_flushing = true
   Rails.logger.info "Updating feeds at #{Time.now}.\n"
 
   urls = Feed.all.map {|feed| feed.url }
@@ -25,12 +23,14 @@ while($running) do
   feeds = Feedzirra::Feed.fetch_and_parse(urls)
 
   feeds.each { |url,feedzr|
-    feed = Feed.find_by_url(url)
-
-    unless feed.nil? 
-      feed.update_feed_db(feedzr.sanitize_entries!)
+    begin
+     Rails.logger.info "Updating feed #{url} ..."
+     feed = Feed.find_by_url(url)
+     feed.update_feed_db(feedzr) unless feed.nil? || feedzr.class.to_s.split("::").first != "Feedzirra"
+     Rails.logger.info "Completed update for feed #{url}"
+    rescue Exception => e
+      Rails.logger.error "Error updating feed #{url}: #{e.message}"
     end
-
   }
 
   sleep 60 * 10 # every ten minutes

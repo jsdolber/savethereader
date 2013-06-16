@@ -1,19 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  feed_id: 1
-  title: MyString
-  summary: MyString
-  content: MyString
-  categories: MyString
-  url: MyString
-  published: MyString
-
-two:
-  feed_id: 1
-  title: MyString
-  summary: MyString
-  content: MyString
-  categories: MyString
-  url: MyString
-  published: MyString
+  feed_id: feeds(:stackoverflow) 
+  title: This is news 
+  summary: Nothing
+  content: Thing
+  categories: Some Category
+  url: http://stackoverflow.com/feeds/page.html
+  guid: http://stackoverflow.com/feeds/page-guid.html
+  published: '2013-06-16'

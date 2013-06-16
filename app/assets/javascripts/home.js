@@ -241,13 +241,25 @@ $(document).ready(function(){
       })
       .done(function(data) { 
         $(".btn-show-unread").html(showRead? showUnreadText : showReadText);
-        loadSubscription($(".feed-link.active").attr("id"));
+        loadSubscription(getSelectedSubscriptionId());
       })
       .fail(function() {
         $("#body-err .msg").text('We can\'t show that right now.');
         $("#body-err").show(); 
       })
    });
+
+    $(".btn-mark-all-read").bind('click',function(){
+      showRead = !$(this).hasClass("active");
+      $.post("/subscriptions/mark_all_read.json",
+      {
+         'id': getSelectedSubscriptionId() 
+      })
+      .done(function(data) { 
+        loadSidebar(); 
+      })
+   });
+
 });
 
 

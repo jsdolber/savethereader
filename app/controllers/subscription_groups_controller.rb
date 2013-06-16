@@ -18,7 +18,6 @@ class SubscriptionGroupsController < ApplicationController
     @subscription_group = SubscriptionGroup.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
       format.json { render json: @subscription_group }
     end
   end
@@ -46,10 +45,8 @@ class SubscriptionGroupsController < ApplicationController
     @subscription_group.user_id = current_user.id
     respond_to do |format|
       if @subscription_group.save
-        format.html { redirect_to @subscription_group, notice: 'Subscription group was successfully created.' }
         format.json { render json: @subscription_group, status: :created, location: @subscription_group }
       else
-        format.html { render action: "new" }
         format.json { render json: @subscription_group.errors, status: :unprocessable_entity }
       end
     end

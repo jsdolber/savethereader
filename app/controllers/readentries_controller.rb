@@ -18,7 +18,6 @@ class ReadentriesController < ApplicationController
     @readentry = Readentry.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
       format.json { render json: @readentry }
     end
   end
@@ -48,10 +47,8 @@ class ReadentriesController < ApplicationController
 
     respond_to do |format|
       if @readentry.save
-        format.html { redirect_to @readentry, notice: 'Readentry was successfully created.' }
         format.json { render json: @readentry, status: :created, location: @readentry }
       else
-        format.html { render action: "new" }
         format.json { render json: @readentry.errors, status: :unprocessable_entity }
       end
     end

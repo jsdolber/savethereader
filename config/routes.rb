@@ -8,6 +8,7 @@ Savethereader::Application.routes.draw do
   match 'subscriptions/set_show_read' => 'subscriptions#set_show_read', :as => :set_show_read, :via => :post
   match 'subscriptions/import' => 'subscriptions#import', :as => :import, :via => :get
   match 'subscriptions/upload_import' => 'subscriptions#upload_import', :as => :upload_import, :via => :post
+  match 'subscriptions/mark_all_read' => 'subscriptions#mark_all_read', :as => :mark_all_unread, :via => :post
 
 
   resources :subscriptions, :except => [:index, :new, :edit, :update] 

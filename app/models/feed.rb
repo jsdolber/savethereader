@@ -15,7 +15,7 @@ class Feed < ActiveRecord::Base
         if fentry.nil?
           new_entry = Entry.init_with_feedzirra_entry(entry)
           new_entry.feed_id = self.id
-          new_entry.save!
+          new_entry.save
         end
     end
   end
@@ -29,7 +29,7 @@ class Feed < ActiveRecord::Base
 
       feed = Feed.create :url => url, :title => feedzr.title
       # get the first dry run
-      feed.update_feed_db(feedzr.sanitize_entries!)
+      feed.update_feed_db(feedzr)
       feed
     rescue Exception => e
       logger.error('problem creating feed: ' + e.message)

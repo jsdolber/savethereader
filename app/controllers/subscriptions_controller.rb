@@ -48,10 +48,8 @@ class SubscriptionsController < ApplicationController
     @subscription = params[:subscription].nil?? Subscription.init(params[:url], params[:group], current_user.id) : Subscription.new(params[:subscription]) 
     respond_to do |format|
       if @subscription.save
-        format.html { redirect_to @subscription, notice: 'Subscription was successfully created.' }
         format.json { render json: @subscription, :include => [:subscription_group, :feed], :methods => :unread_count, status: :created, location: @subscription }
       else
-        format.html { render action: "new" }
         format.json { render json: @subscription.errors, status: :unprocessable_entity }
       end
     end
@@ -80,7 +78,6 @@ class SubscriptionsController < ApplicationController
     @subscription.destroy
 
     respond_to do |format|
-      format.html { redirect_to subscriptions_url }
       format.json { head :no_content }
     end
   end
@@ -103,6 +100,7 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  # POST /subscriptions/set_show_read.json
   def set_show_read
     show_read_toggle(to_boolean(params[:state]))
 
@@ -111,12 +109,25 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  # GET /sidebar.js
   def sidebar
     @subs_groups = current_user.subscription_groups
     @subs_ungroup = current_user.subscriptions.where(:group_id => nil)
     respond_to do |format|
       format.js
     end
+  end
+
+  # POST /subscriptions/mark_all_read.json
+  def mark_all_read
+    subscription = Subscription.find(params[:id])
+
+    subscription.touch unless subscription.nil?
+
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+
   end
 
   private

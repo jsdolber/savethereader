@@ -166,7 +166,7 @@ $(document).ready(function(){
         $(".feed-link.active .unreadcnt").html(unread_cnt - 1);
    }
 
-   function loadSubscription(subs_id) {
+   loadSubscription = function(subs_id) {
       if (subs_id === undefined) return;
 
       $.ajax({

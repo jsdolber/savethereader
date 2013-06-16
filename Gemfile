@@ -48,15 +48,17 @@ gem 'hpricot'
 # gem 'capistrano'
 
 group :development do
- gem 'debugger'
  gem 'better_errors'
  gem 'binding_of_caller'
  gem 'meta_request'
- gem 'guard-test'
 end
 
-group :test do
+group :development, :test do
   gem 'debugger'
+  gem 'guard-test'
+  gem 'rspec-rails', '~> 2.0'
+  gem 'factory_girl', "~> 4.0"
+  gem 'capybara'
 end
 
 gem 'newrelic_rpm'
