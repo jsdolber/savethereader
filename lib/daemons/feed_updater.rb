@@ -27,11 +27,11 @@ while($running) do
      Rails.logger.info "Updating feed #{url} ..."
      feed = Feed.find_by_url(url)
      feed.update_feed_db(feedzr) unless feed.nil? || feedzr.class.to_s.split("::").first != "Feedzirra"
-     Rails.logger.info "Completed update for feed #{url}"
+     Rails.logger.info "Completed update for feed #{url} at #{Time.now}.\n"
     rescue Exception => e
       Rails.logger.error "Error updating feed #{url}: #{e.message}"
     end
   }
 
-  sleep 60 * 10 # every ten minutes
+  sleep 10.minutes
 end

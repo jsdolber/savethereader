@@ -22,8 +22,8 @@ class Feed < ActiveRecord::Base
 
   def self.create_and_update(url)
     begin
-      #first try to get the feeds
-      url = Feedbag.find(url).first
+      #first try to get the feed
+      url = Feed.find_url_with_feedbag(url)
       feedzr = Feedzirra::Feed.fetch_and_parse(url)
       return nil if feedzr.nil? || feedzr.class.to_s.split("::").first != "Feedzirra"
 
@@ -42,7 +42,17 @@ class Feed < ActiveRecord::Base
   end
 
   def self.find_by_url_with_feedbag(url)
-    feed = Feed.find_by_url(url)
-    feed = Feed.find_by_url(Feedbag.find(url).first) if feed.nil?
+    Feed.find_by_url(Feed.find_url_with_feedbag(url))
   end
+
+  def self.find_url_with_feedbag(url)
+    begin
+      feedbag_url = Feedbag.find(url).first
+    rescue
+      logger.error('returning original url because: ' + e.message)
+    end
+
+    feedbag_url || url
+  end
+
 end

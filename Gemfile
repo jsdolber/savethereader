@@ -62,3 +62,7 @@ group :development, :test do
 end
 
 gem 'newrelic_rpm'
+
+gem 'resque', :require => "resque/server"
+
+gem 'sanitize'

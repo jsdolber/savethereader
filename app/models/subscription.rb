@@ -34,7 +34,7 @@ class Subscription < ActiveRecord::Base
     subscriptions.each do |provider, s_file|
       case provider.to_sym
       when :google
-        Subscription.import_from_google(s_file.tempfile, user_id)
+        Subscription.import_from_google(s_file, user_id)
       else
         logger.error("no received provider")
       end
@@ -59,33 +59,9 @@ class Subscription < ActiveRecord::Base
 
   def self.import_from_google(file, user_id)
     begin
-     doc = Hpricot::XML(file)
-     (doc/:outline).each do |entry|
-        xmlUrl, title = entry.attributes["xmlUrl"], entry.attributes["title"]
-
-        if (xmlUrl.empty?) # its a group
-          title = title.truncate(20)
-          current_group = SubscriptionGroup.where(:user_id => user_id, :name => title).first
-
-          if current_group.nil?
-            current_group = SubscriptionGroup.create(:name => title)
-            current_group.user_id = user_id
-            current_group.save!
-          end
-          
-          (entry/:outline).each do |s_entry|
-              s_xmlUrl = s_entry.attributes["xmlUrl"]
-              s_subscription = Subscription.init(s_xmlUrl, current_group.name, user_id)
-              s_subscription.save! if s_subscription.valid?
-          end
-        else
-          new_subscription = Subscription.init(xmlUrl, nil, user_id)
-          new_subscription.save! if new_subscription.valid?
-        end
-     end
+      Resque.enqueue(GoogleSubscriptionsImporter, user_id, file )
     rescue Exception => e
       logger.error('reading subscriptions ' + e.message)
-      nil
     end
   end
 

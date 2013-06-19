@@ -11,7 +11,7 @@ Savethereader::Application.routes.draw do
   match 'subscriptions/mark_all_read' => 'subscriptions#mark_all_read', :as => :mark_all_unread, :via => :post
 
 
-  resources :subscriptions, :except => [:index, :new, :edit, :update] 
+  resources :subscriptions, :except => [:index, :new, :edit] 
   resources :readentries, :only => [:create, :show]
   resources :subscription_groups, :only => [:create, :show]
 
