@@ -1,0 +1,5 @@
+update_feeds:
+  cron: "*/20 * * * *"
+  class: FeedUpdater
+  queue: feeds
+  description: "This job will update feeds every 20 min"

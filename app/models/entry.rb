@@ -3,7 +3,7 @@ class Entry < ActiveRecord::Base
 
   validates_presence_of :feed_id, :title, :url, :guid
 
-  validates_uniqueness_of :guid
+  validates_uniqueness_of :guid, :scope => :feed_id
 
   def self.init_with_feedzirra_entry(entry)
     new_entry = Entry.new

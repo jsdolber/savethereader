@@ -15,12 +15,12 @@ module HomeHelper
   def display_user_sidebar_feeds(subs_group, subs_ungroup)
     content_tag(:ul, :class => "nav nav-list sidebar-nav affix-top") do
       subs_group.each do |group|
-        unless group.subscriptions.empty?
+        #unless group.subscriptions.empty?
           concat(label_to_li_grp(group.name, group.id)) +
           group.subscriptions.collect do |subs|
             concat(label_to_li(subs.feed.title, subs.feed.url, subs.id, subs.unread_count))
           end  
-        end      
+        # end      
       end unless subs_group.nil? || subs_group.empty? 
       concat(label_to_li_grp("Uncategorized", 0)) +
       subs_ungroup.collect do |subs|

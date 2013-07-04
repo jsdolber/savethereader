@@ -50,13 +50,14 @@ $(document).ready(function(){
 
    bindSubscriptionGroupListClick = function() {
       $('.subscription-group').bind('click', function() {
-        $("#selectionGroup").html($(this).text())
+        $("#selectionGroup").html($(this).text());
       });
    };
 
    bindSubscriptionGroupListClick();
 
    expandGroup = function(groupEl){
+     console.log(groupEl.nextUntil(".group"));
       groupEl.nextUntil(".group").toggle(true);
       groupEl.find(".unreadcnt").remove();
       groupEl.html(groupEl.text());
@@ -90,6 +91,7 @@ $(document).ready(function(){
        $(this).addClass('active');
        loadSubscription($(this).attr("id"));
        setSelectedSubcription($(this).attr("id"));
+       $(".loader").show();
     });
 
     // sidebar group change and subs remove 
@@ -148,11 +150,15 @@ $(document).ready(function(){
         }
     });
 
+    $("li.group").bind('dblclick', function(){
+      var group = $(".group#" + $(this).attr('id'));
+      expandGroup(group);
+    });
+
     // set initial group status
     $("li.group").each(function(){
       var groupId = $(this).attr('id');
       if (getGroupCollapsed(groupId) == "true") {
-        console.log("now here with groupId " + 1);
           collapseGroup($(this));
       }
     });
@@ -167,7 +173,7 @@ $(document).ready(function(){
    }
 
    loadSubscription = function(subs_id) {
-      if (subs_id === undefined) return;
+      if (subs_id === undefined || parseInt(subs_id) == 0) return;
 
       $.ajax({
         url: "/subscriptions/" + subs_id + ".js",

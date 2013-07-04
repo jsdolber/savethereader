@@ -2,7 +2,8 @@ class HomeController < ApplicationController
   before_filter :authenticate_user!, :only => [:s, :subscription_sidebar] 
 
   def index
-    @entries = Feed.find_by_url("http://stackoverflow.com/feeds").entries.limit(15) #feed by default
+    default_feed = Feed.find_by_url("http://stackoverflow.com/feeds")
+    @entries = default_feed.entries.limit(15) unless default_feed.nil?
     @groups = all_fake_groups
   end
 

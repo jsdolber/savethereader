@@ -2,7 +2,7 @@
 <div class="sidebar-nav-fixed">
   <div class="row-fluid">
     <h1>Save The Reader</h1>
-    <p class="lead"><small>A minimalistic RSS reader.</small></p>
+    <p class="lead"><small>A free RSS reader.</small></p>
   </div>
   <div id="subscription-sidebar" class="row-fluid">
       <%= render 'layouts/sidebar' %>
@@ -26,7 +26,10 @@
       <% end %> 
     </div>
     <% if user_signed_in? && @subscription_count > 0 %>
-      <a class="hook"><i class="icon-spinner icon-spin icon-large"></i> &nbsp;</a>
+      <div class="loader">
+       <i class="icon-spinner icon-spin icon-large"></i>
+       <a class="hook">. &nbsp;</a>
+      </div>
     <% end %>
     <%= render 'new_subscription' %>
   </div>

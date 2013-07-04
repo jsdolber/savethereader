@@ -6,6 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+gem 'mysql2'
 
 
 # Gems used only for assets and not required
@@ -42,7 +43,7 @@ gem 'hpricot'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
@@ -62,7 +63,7 @@ group :development, :test do
 end
 
 gem 'newrelic_rpm'
-
 gem 'resque', :require => "resque/server"
-
+gem 'resque-scheduler', :require => 'resque_scheduler'
 gem 'sanitize'
+gem 'redis-rails'

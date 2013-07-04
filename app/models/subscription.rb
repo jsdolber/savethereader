@@ -21,7 +21,7 @@ class Subscription < ActiveRecord::Base
 
   def unread_count
     r_entries = read_entries.collect {|re| re.entry_id }
-    entries = self.feed.entries.where('updated_at > ?', self.updated_at - 12.hours).collect { |entry| entry.id } #watch out for scaling issues
+    entries = self.feed.entries.where('updated_at > ?', self.updated_at).collect { |entry| entry.id } #watch out for scaling issues
     (entries - r_entries).count
   end
 

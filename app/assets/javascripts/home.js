@@ -256,7 +256,8 @@ $(document).ready(function(){
          'id': getSelectedSubscriptionId() 
       })
       .done(function(data) { 
-        loadSidebar(); 
+        loadSidebar();
+        $(".btn-mark-all-read").removeClass('active'); 
       })
    });
 

@@ -20,7 +20,7 @@
  }
  <% else -%>
  $('a.hook').attr('href', '');
- $('a.hook').hide();
+ $('.loader').hide();
  if (<%= params[:page].to_i == 0 %>) {
    $("div.feed-view").html('');
     if ($("#no-entries-banner").length == 0)

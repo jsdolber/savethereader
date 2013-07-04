@@ -91,7 +91,7 @@ class SubscriptionsController < ApplicationController
   def upload_import
     respond_to do |format|
       if Subscription.import(params[:file], current_user.id)
-        format.html { redirect_to root_path, notice: 'Subscriptions were successfully imported.' }
+        format.html { redirect_to root_path, notice: 'Your subscriptions are being imported. They will start appearing on your sidebar shortly.' }
         format.json { head :no_content }
       else
         format.html { render action: "import", error: 'Unable to process import.' }
