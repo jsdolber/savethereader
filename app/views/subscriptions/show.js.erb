@@ -1,4 +1,4 @@
-<% if !@entries.nil? && @entries.all.count > 0 %>
+<% if !@entries.nil? && @entries.count > 0 %>
     var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
  <% if params[:page].to_i == 0 %>
     $('div.feed-view').html(feed_html);

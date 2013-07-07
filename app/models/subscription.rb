@@ -49,8 +49,8 @@ class Subscription < ActiveRecord::Base
   def get_unread_entries(page_num, per_page)
     return nil if self.unread_count == 0
     r_entries = read_entries.collect {|re| re.entry_id }
-    q_conditions = r_entries.count == 0 ? nil :  ['id not in (?)', r_entries]
-    self.feed.entries.paginate(page: page_num || 1, per_page: per_page || 15, conditions: q_conditions, order: 'created_at DESC')
+    entries = self.feed.entries.paginate(page: page_num || 1, per_page: per_page || 15, order: 'created_at DESC').to_a
+    entries.keep_if {|e| !r_entries.include? e.id }
   end
 
   def read_entries

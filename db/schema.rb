@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130615150607) do
+ActiveRecord::Schema.define(:version => 20130705223443) do
 
   create_table "entries", :force => true do |t|
     t.integer  "feed_id"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20130615150607) do
     t.string   "guid"
     t.text     "author"
   end
+
+  add_index "entries", ["feed_id"], :name => "index_entries_on_feed_id"
 
   create_table "feeds", :force => true do |t|
     t.string   "title"
@@ -42,6 +44,9 @@ ActiveRecord::Schema.define(:version => 20130615150607) do
     t.integer  "subscription_id"
   end
 
+  add_index "readentries", ["subscription_id"], :name => "index_readentries_on_subscription_id"
+  add_index "readentries", ["user_id"], :name => "index_readentries_on_user_id"
+
   create_table "subscription_groups", :force => true do |t|
     t.string   "name"
     t.string   "color"
@@ -50,6 +55,8 @@ ActiveRecord::Schema.define(:version => 20130615150607) do
     t.integer  "user_id"
   end
 
+  add_index "subscription_groups", ["user_id"], :name => "index_subscription_groups_on_user_id"
+
   create_table "subscriptions", :force => true do |t|
     t.integer  "feed_id"
     t.integer  "user_id"
@@ -57,6 +64,10 @@ ActiveRecord::Schema.define(:version => 20130615150607) do
     t.datetime "updated_at", :null => false
     t.integer  "group_id"
   end
+
+  add_index "subscriptions", ["feed_id"], :name => "index_subscriptions_on_feed_id"
+  add_index "subscriptions", ["group_id"], :name => "index_subscriptions_on_group_id"
+  add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
