@@ -67,3 +67,5 @@ gem 'resque', :require => "resque/server"
 gem 'resque-scheduler', :require => 'resque_scheduler'
 gem 'sanitize'
 gem 'redis-rails'
+
+gem "capistrano"

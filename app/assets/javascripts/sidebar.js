@@ -57,7 +57,6 @@ $(document).ready(function(){
    bindSubscriptionGroupListClick();
 
    expandGroup = function(groupEl){
-     console.log(groupEl.nextUntil(".group"));
       groupEl.nextUntil(".group").toggle(true);
       groupEl.find(".unreadcnt").remove();
       groupEl.html(groupEl.text());
@@ -188,7 +187,7 @@ $(document).ready(function(){
         $("#body-err .msg").text('We were unable to serve this subscription.');
         $("#body-err").show(); 
       })
-      .always(function(data, textStatus) {  }); 
+      .always(function(data, textStatus) { /* emtpy */ }); 
    }
 
    var intervalId = null;

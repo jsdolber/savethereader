@@ -4,6 +4,7 @@ var showUnreadText = "<i class='icon-eye-closed'></i> Show only unread";
 var showReadText = "<i class='icon-eye-open'></i> Show read";
 var updateSubscriptionGroup;
 var removeSubscription;
+var checkIfNextPageNeeded;
 
 $(document).ready(function(){
    'use strict'; 
@@ -182,9 +183,8 @@ $(document).ready(function(){
         direction;
 
     function detectDirection() {
-
-        st = window.pageYOffset;
-
+        var st = window.pageYOffset;
+        var direction = null;
         if (st > lastScrollTop) {
             direction = "down";
         } else {
@@ -232,6 +232,19 @@ $(document).ready(function(){
       })
     }
 
+    function checkIfNextPageNeeded(page_num, url){
+      var unreacnt = parseInt($("#" + getSelectedSubscriptionId()).find(".unreadcnt").text());
+      unreadcnt = isNaN(unreadcnt)? 0 : unreadcnt;
+      if (unreadcnt > 0) 
+      {
+        var next_page_num = page_num + 1;
+        url = url.replace(page_num, 'page=' + next_page_num);
+        $.getScript(url);
+        return true;
+      }
+      return false;
+    }
+
    // navigation bar actions
    $(".btn-show-unread").bind('click',function(){
       showRead = !$(this).hasClass("active");
@@ -260,7 +273,6 @@ $(document).ready(function(){
         $(".btn-mark-all-read").removeClass('active'); 
       })
    });
-
 });
 
 

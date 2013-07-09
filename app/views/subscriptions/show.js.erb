@@ -1,3 +1,6 @@
+var page_num = parseIntWithEmpty('<%= params[:page] %>') + 1; 
+var page_param = 'page=' + page_num;
+var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js, page: (params[:page] || 1).to_i + 1, per_page: params[:per_page] || 15) %>';
 <% if !@entries.nil? && @entries.count > 0 %>
     var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
  <% if params[:page].to_i == 0 %>
@@ -6,7 +9,8 @@
  <% else %>
     $('div.feed-view').append(feed_html);
  <% end %>
- $('a.hook').attr('href', '<%= subscription_path(id: @subscription_id, format: :js, page: (params[:page] || 1).to_i + 1, per_page: params[:per_page] || 15) %>').show();
+ $(".feed-view a").attr("target", "_blank");
+ $('a.hook').attr('href', entries_load_url).show();
  bindInviewEntries();
  if (!showRead) {
   $(".entry.read").hide();
@@ -18,14 +22,19 @@
  else {
    $(".entry.read").fadeTo(0, 0.5);
  }
+ 
  <% else -%>
- $('a.hook').attr('href', '');
- $('.loader').hide();
- if (<%= params[:page].to_i == 0 %>) {
+ if (!checkIfNextPageNeeded(page_num, page_param)) // last page 
+ {
+  $('a.hook').attr('href', '');
+  $('.loader').hide();
+
+  if (<%= params[:page].to_i == 0 %>) {
    $("div.feed-view").html('');
     if ($("#no-entries-banner").length == 0)
     $("#overview").append("<div id='no-entries-banner' class='hero-unit'><h3>...and that's all there is for now!</h3></div>");
- }
+  }
+ } 
 
 <% end %>
 showRead = <%= show_read %>;

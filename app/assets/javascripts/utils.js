@@ -3,3 +3,8 @@ function validateUrl(url) {
   var regex = new RegExp(expression);
   return url.match(regex);
 }
+
+function parseIntWithEmpty(str) {
+  if (str == undefined || str.length == 0) return 0;
+  return parseInt(str);
+}

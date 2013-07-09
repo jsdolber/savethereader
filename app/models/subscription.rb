@@ -50,7 +50,7 @@ class Subscription < ActiveRecord::Base
     return nil if self.unread_count == 0
     r_entries = read_entries.collect {|re| re.entry_id }
     entries = self.feed.entries.paginate(page: page_num || 1, per_page: per_page || 15, order: 'created_at DESC').to_a
-    entries.keep_if {|e| !r_entries.include? e.id }
+    return entries.keep_if {|e| !r_entries.include? e.id }
   end
 
   def read_entries
