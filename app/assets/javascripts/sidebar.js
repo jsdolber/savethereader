@@ -176,18 +176,18 @@ $(document).ready(function(){
 
       $.ajax({
         url: "/subscriptions/" + subs_id + ".js",
-        type: "GET"
-        //dataType: "script"
+        type: "GET",
+        dataType: "text"
       })
       .done(function(data) {
-        //eval(data);
+        eval(data);
       })
       .fail(function(data) {
         if (data.status == 200) return; // not json 
         $("#body-err .msg").text('We were unable to serve this subscription.');
         $("#body-err").show(); 
       })
-      .always(function(data, textStatus) { /* emtpy */ }); 
+      .always(function(data, textStatus) { /* empty */ }); 
    }
 
    var intervalId = null;

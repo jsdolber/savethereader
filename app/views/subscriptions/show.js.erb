@@ -2,16 +2,20 @@ var page_num = parseIntWithEmpty('<%= params[:page] %>') + 1;
 var page_param = 'page=' + page_num;
 var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js, page: (params[:page] || 1).to_i + 1, per_page: params[:per_page] || 15) %>';
 <% if !@entries.nil? && @entries.count > 0 %>
-    var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
+ var feed_html = '<%= escape_javascript(render(partial: 'feed', object: @entries)) %>';
+ // see if first or else page
  <% if params[:page].to_i == 0 %>
     $('div.feed-view').html(feed_html);
     window.scrollTo(0, 0);
  <% else %>
     $('div.feed-view').append(feed_html);
  <% end %>
+
  $(".feed-view a").attr("target", "_blank");
  $('a.hook').attr('href', entries_load_url).show();
+ 
  bindInviewEntries();
+ 
  if (!showRead) {
   $(".entry.read").hide();
   if ($(".entry.read").length > 6 && $(".entry.unread").length < 15) {
@@ -22,21 +26,19 @@ var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js,
  else {
    $(".entry.read").fadeTo(0, 0.5);
  }
- 
  <% else -%>
  if (!checkIfNextPageNeeded(page_num, page_param)) // last page 
  {
-  $('a.hook').attr('href', '');
-  $('.loader').hide();
+   $('a.hook').attr('href', '');
+   $('.loader').hide();
 
-  if (<%= params[:page].to_i == 0 %>) {
    $("div.feed-view").html('');
     if ($("#no-entries-banner").length == 0)
     $("#overview").append("<div id='no-entries-banner' class='hero-unit'><h3>...and that's all there is for now!</h3></div>");
-  }
  } 
 
 <% end %>
+
 showRead = <%= show_read %>;
 showRead ?  $(".btn-show-unread").addClass("active") :  $(".btn-show-unread").removeClass("active");
 $(".btn-show-unread").html(showRead? showUnreadText : showReadText);

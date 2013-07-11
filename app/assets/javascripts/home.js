@@ -232,9 +232,12 @@ $(document).ready(function(){
       })
     }
 
-    function checkIfNextPageNeeded(page_num, url){
-      var unreacnt = parseInt($("#" + getSelectedSubscriptionId()).find(".unreadcnt").text());
-      unreadcnt = isNaN(unreadcnt)? 0 : unreadcnt;
+    checkIfNextPageNeeded = function(page_num, url){
+      var unreadcnt = parseInt($("#" + getSelectedSubscriptionId()).find(".unreadcnt").text());
+
+      if (isNaN(unreadcnt))
+        unreadcnt = 0;
+
       if (unreadcnt > 0) 
       {
         var next_page_num = page_num + 1;
