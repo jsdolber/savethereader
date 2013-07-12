@@ -184,7 +184,6 @@ $(document).ready(function(){
 
     function detectDirection() {
         var st = window.pageYOffset;
-        var direction = null;
         if (st > lastScrollTop) {
             direction = "down";
         } else {
@@ -192,9 +191,7 @@ $(document).ready(function(){
         }
 
         lastScrollTop = st;
-
         return  direction;
-
     }
 
     $(window).bind('scroll', function() {
