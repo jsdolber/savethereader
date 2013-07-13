@@ -33,8 +33,8 @@ var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js,
    $('a.hook').attr('href', '');
    $('.loader').hide();
 
-   $("div.feed-view").html('');
-    if ($("#no-entries-banner").length == 0)
+   //$("div.feed-view").html('');
+   if ($("#no-entries-banner").length == 0)
     $("#overview").append("<div id='no-entries-banner' class='hero-unit'><h3>...and that's all there is for now!</h3></div>");
  } 
 

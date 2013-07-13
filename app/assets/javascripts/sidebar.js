@@ -172,7 +172,9 @@ $(document).ready(function(){
    }
 
    loadSubscription = function(subs_id) {
-      if (subs_id === undefined || parseInt(subs_id) == 0) return;
+      if (subs_id == undefined || parseInt(subs_id) == 0) return;
+      
+      $("div.feed-view").html('');
 
       $.ajax({
         url: "/subscriptions/" + subs_id + ".js",
