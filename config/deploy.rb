@@ -1,9 +1,9 @@
-require 'capistrano-unicorn'
-
 set :application, "savethereader"
 set :deploy_to, "/var/www/#{application}"
-set :repository,  "https://github.com/jsdolber/savethereader.git"
-
+set :repository,  "git@github.com:jsdolber/savethereader.git"
+set :use_sudo, false
+set :port, 30003
+set :user, 'oneman'
 set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 set :scm_user, "jsdolber"
@@ -17,16 +17,8 @@ server "106.187.88.126", :app, :web, :primary => true
 # if you're still using the script/reaper helper you will need
 # these http://github.com/rails/irs_process_scripts
 
-# If you are using Passenger mod_rails uncomment this:
-namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-  end
-end
 set :keep_releases, 3
-after 'deploy:update_code', 'deploy:migrate'
-after "deploy:restart", "deploy:cleanup" 
+after "deploy:restart", "deploy:cleanup"
+require 'capistrano-unicorn'
 after 'deploy:restart', 'unicorn:reload' # app IS NOT preloaded
 after 'deploy:restart', 'unicorn:restart'  # app preloaded
