@@ -1,5 +1,7 @@
-set :application, "save_the_reader"
-set :deploy_to, "/opt/#{application}"
+require 'capistrano-unicorn'
+
+set :application, "savethereader"
+set :deploy_to, "/var/www/#{application}"
 set :repository,  "https://github.com/jsdolber/savethereader.git"
 
 set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
@@ -7,7 +9,7 @@ set :scm, :git # You can set :scm explicitly or Capistrano will make an intellig
 set :scm_user, "jsdolber"
 
 server "106.187.88.126", :app, :web, :primary => true
-role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
+#role :db,  "sugarglider.c5vxgq82kuz5.us-west-2.rds.amazonaws.com", :primary => true # This is where Rails migrations will run
 
 # if you want to clean up old releases on each deploy uncomment this:
 # after "deploy:restart", "deploy:cleanup"
@@ -23,6 +25,8 @@ namespace :deploy do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 end
-set :keep_releases, 5
+set :keep_releases, 3
 after 'deploy:update_code', 'deploy:migrate'
 after "deploy:restart", "deploy:cleanup" 
+after 'deploy:restart', 'unicorn:reload' # app IS NOT preloaded
+after 'deploy:restart', 'unicorn:restart'  # app preloaded

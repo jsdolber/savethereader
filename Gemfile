@@ -46,7 +46,8 @@ gem 'hpricot'
 gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
+gem 'capistrano-unicorn'
 
 group :development do
  gem 'better_errors'
@@ -67,5 +68,3 @@ gem 'resque', :require => "resque/server"
 gem 'resque-scheduler', :require => 'resque_scheduler'
 gem 'sanitize'
 gem 'redis-rails'
-
-gem "capistrano"
