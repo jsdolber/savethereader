@@ -50,7 +50,7 @@ gem 'capistrano'
 gem 'capistrano-unicorn'
 
 group :development do
- gem 'better_errors'
+ gem 'better_errors', '= 0.9.0'
  gem 'binding_of_caller'
  gem 'meta_request'
 end

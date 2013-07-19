@@ -191,7 +191,6 @@ $(document).ready(function(){
         }
 
         lastScrollTop = st;
-        return  direction;
     }
 
     $(window).bind('scroll', function() {
@@ -235,10 +234,10 @@ $(document).ready(function(){
       if (isNaN(unreadcnt))
         unreadcnt = 0;
 
-      if (unreadcnt > 0) 
+      if (unreadcnt > 0 && $('a.hook').attr('href') != undefined) 
       {
         var next_page_num = page_num + 1;
-        url = url.replace(page_num, 'page=' + next_page_num);
+        url = $('a.hook').attr('href').replace('page=' + page_num, 'page=' + next_page_num);
         $.getScript(url);
         return true;
       }
@@ -263,7 +262,7 @@ $(document).ready(function(){
    });
 
     $(".btn-mark-all-read").bind('click',function(){
-      showRead = !$(this).hasClass("active");
+      setSelectedSubscriptionCountToZero();
       $.post("/subscriptions/mark_all_read.json",
       {
          'id': getSelectedSubscriptionId() 

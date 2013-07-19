@@ -33,10 +33,12 @@ span.unreadcnt {
 }
 
 .spacer {
-    margin-top: 40px; /* define margin as you see fit */
+    margin-top: 20px; /* define margin as you see fit */
 }
 
 .modal { overflow: visible; }
 .modal-body { overflow-y: visible !important; }
 
 header {position:fixed}
+
+.lead small {font-size:75%}

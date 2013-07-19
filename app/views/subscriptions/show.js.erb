@@ -19,10 +19,15 @@ var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js,
  
  if (!showRead) {
   $(".entry.read").hide();
-  if ($(".entry.read").length > 6 && $(".entry.unread").length < 15) {
-   $.getScript($('a.hook').attr("href"));
-   $(".entry.read").remove();
+  
+  if ($(".entry.unread").length < 15) {
+    $.getScript($('a.hook').attr("href"));
   }
+
+  if ($(".entry.read").length > 6) {
+    $(".entry.read").remove();
+  }
+
  }
  else {
    $(".entry.read").fadeTo(0, 0.5);

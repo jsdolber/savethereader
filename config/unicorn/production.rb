@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------------
 
 # Set your full path to application.
-app_path = "/var/www/savethereader"
+app_path = "/var/www/savethereader/current"
 
 # Set unicorn options
 worker_processes 3
