@@ -236,9 +236,6 @@ $(document).ready(function(){
 
       if (unreadcnt > 0 && $('a.hook').attr('href') != undefined) 
       {
-        var next_page_num = page_num + 1;
-        url = $('a.hook').attr('href').replace('page=' + page_num, 'page=' + next_page_num);
-        $.getScript(url);
         return true;
       }
       return false;

@@ -25,8 +25,7 @@ class Subscription < ActiveRecord::Base
     (entries - r_entries).count
   end
 
-  def get_entries(page_num, per_page, show_read)
-    return get_unread_entries(page_num, per_page) unless show_read
+  def get_entries(page_num, per_page)
     get_all_entries(page_num, per_page)
   end
 

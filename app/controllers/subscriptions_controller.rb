@@ -16,13 +16,11 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions/1.json
   def show
     @subscription = Subscription.find(params[:id])
-    @entries = @subscription.get_entries(params[:page], params[:per_page], show_read)
+    @entries = @subscription.get_entries(params[:page], params[:per_page])
     @subscription_id = @subscription.id
     @user_id = current_user.id
     respond_to do |format|
-      format.html # show.html.erb
       format.json { render json: @subscription }
-      format.js
     end
   end
 
