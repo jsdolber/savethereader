@@ -20,7 +20,7 @@ class SubscriptionsController < ApplicationController
     @subscription_id = @subscription.id
     @user_id = current_user.id
     respond_to do |format|
-      format.json { render json: @subscription }
+      format.js
     end
   end
 

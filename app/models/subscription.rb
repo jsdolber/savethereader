@@ -42,13 +42,13 @@ class Subscription < ActiveRecord::Base
 
   private
   def get_all_entries(page_num, per_page)
-    self.feed.entries.paginate(page: page_num || 1, per_page: per_page || 15, order: 'created_at DESC')
+    self.feed.entries.paginate(page: page_num || 1, per_page: per_page || 10, order: 'created_at DESC')
   end
 
   def get_unread_entries(page_num, per_page)
     return nil if self.unread_count == 0
     r_entries = read_entries.collect {|re| re.entry_id }
-    entries = self.feed.entries.paginate(page: page_num || 1, per_page: per_page || 15, order: 'created_at DESC').to_a
+    entries = self.feed.entries.paginate(page: page_num || 1, per_page: per_page || 10, order: 'created_at DESC').to_a
     return entries.keep_if {|e| !r_entries.include? e.id }
   end
 
@@ -60,7 +60,7 @@ class Subscription < ActiveRecord::Base
     begin
       Resque.enqueue(GoogleSubscriptionsImporter, user_id, file )
     rescue Exception => e
-      logger.error('reading subscriptions ' + e.message)
+      logger.error('importing subscriptions ' + e.message)
     end
   end
 

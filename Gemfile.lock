@@ -63,11 +63,6 @@ GEM
     coffee-script-source (1.6.2)
     columnize (0.3.6)
     curb (0.7.18)
-    daemons (1.1.9)
-    daemons-rails (1.1.2)
-      daemons
-      multi_json (~> 1.0)
-      rails (~> 3.0)
     debug_inspector (0.0.2)
     debugger (1.3.1)
       columnize (>= 0.3.1)
@@ -147,7 +142,6 @@ GEM
     newrelic_rpm (3.6.2.96)
     nokogiri (1.4.7)
     orm_adapter (0.4.0)
-    pg (0.15.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
@@ -283,8 +277,6 @@ DEPENDENCIES
   capistrano-unicorn
   capybara
   coffee-rails (~> 3.2.1)
-  daemons
-  daemons-rails
   debugger
   devise
   factory_girl (~> 4.0)
@@ -295,7 +287,6 @@ DEPENDENCIES
   meta_request
   mysql2
   newrelic_rpm
-  pg
   rails (= 3.2.13)
   redis-rails
   resque

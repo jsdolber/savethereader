@@ -1,7 +1,7 @@
 var page_num = parseIntWithEmpty('<%= params[:page] %>') + 1; 
 var page_param = 'page=' + page_num;
 var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js, page: (params[:page] || 1).to_i + 1, per_page: params[:per_page] || 15) %>';
-<% if !@entries.nil? && @entries.count > 0 %>
+<% if !@entries.nil? && !@entries.empty? %>
 
  $(".entry.read").removeClass("read");
 
