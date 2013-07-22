@@ -1,5 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_filter :authenticate_user!
+  #caches_action :show, :cache_path => custom_cache_path.to_proc
 
   # GET /subscriptions
   # GET /subscriptions.json
@@ -12,8 +13,7 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  # GET /subscriptions/1
-  # GET /subscriptions/1.json
+  # GET /subscriptions/1.js
   def show
     @subscription = Subscription.find(params[:id])
     @entries = @subscription.get_entries(params[:page], params[:per_page])
@@ -126,6 +126,10 @@ class SubscriptionsController < ApplicationController
       format.json { head :no_content }
     end
 
+  end
+
+  def custom_cache_path
+    "#{params[:id]}-#{params[:page]}-#{params[:controller]}-#{params[:action]}"
   end
 
   private

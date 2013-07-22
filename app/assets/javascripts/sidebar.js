@@ -94,8 +94,8 @@ $(document).ready(function(){
     $('.feed-link').bind('click', function(){
        $('.feed-link').removeClass('active');
        $(this).addClass('active');
+       $("a.hook").attr('href','');
        loadSubscription($(this).attr("id"));
-       setSelectedSubcription($(this).attr("id"));
        $(".loader").show();
     });
 
@@ -169,8 +169,6 @@ $(document).ready(function(){
     });
   }
   
-  bindSubscriptionNavigation();
-   
   decrementActiveReadCount = function(){
       var unread_cnt = parseInt($(".feed-link.active .unreadcnt").text());
       if (unread_cnt > 0)
@@ -182,6 +180,7 @@ $(document).ready(function(){
       
       $("div.feed-view").html('');
       $("#no-entries-banner").remove();
+      setSelectedSubcription(subs_id);
 
       $.ajax({
         url: "/subscriptions/" + subs_id + ".js",
@@ -211,6 +210,8 @@ $(document).ready(function(){
         eval(data);
       })
    };
+    
+   bindSubscriptionNavigation();
 
    $("ul.nav-list").disableSelection();
 

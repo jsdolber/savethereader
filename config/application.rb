@@ -24,6 +24,7 @@ module Savethereader
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
+    config.active_record.observers = :feed_sweeper
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
@@ -60,5 +61,7 @@ module Savethereader
     config.assets.version = '1.0'
 
     config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
+
+    #config.autoload_paths += "%W(#{config.root}/app/sweepers"
   end
 end
