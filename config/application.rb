@@ -75,6 +75,7 @@ module Savethereader
       enable_starttls_auto: true  }
     config.action_mailer.perform_deliveries = true
     config.action_mailer.raise_delivery_errors = false
-    config.action_mailer.default_options = {from: 'sebastian@savethereader.com'}
+    ActionMailer::Base.default :from => 'sebastian@savethereader.com'
+    config.action_mailer.default_url_options = { :host => 'savethereader.com' }
   end
 end
