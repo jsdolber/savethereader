@@ -1,8 +1,8 @@
 class HomeController < ApplicationController
-  before_filter :authenticate_user!, :only => [:s, :subscription_sidebar] 
+  before_filter :authenticate_user!, :only => [:s, :subscription_sidebar]
+  #caches_action :index, :expires_in => 10.minutes
 
   def index
-    default_feed = Feed.find_by_url("http://stackoverflow.com/feeds")
     @entries = default_feed.entries.limit(15) unless default_feed.nil?
     @groups = all_fake_groups
   end
@@ -18,6 +18,10 @@ class HomeController < ApplicationController
   private
   def all_fake_groups
     [SubscriptionGroup.new(name: "TECH"), SubscriptionGroup.new(name: "GENERAL")]
+  end
+
+  def default_feed
+    Feed.find_by_url(["http://feeds.wired.com/wired/index", "http://news.ycombinator.com/rss", "http://theverge.com/rss/index.xml"].sample)
   end
 
 end

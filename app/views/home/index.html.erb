@@ -13,6 +13,11 @@
   <div class="jumbotron subhead" id="overview">
     <div class="feed-view">
       <% if !user_signed_in? %>
+        <div class="alert alert-info">
+          <a class="close" data-dismiss="alert">&#215;</a>
+          <i class="icon-info-sign"></i> 
+          Hi there and welcome! Take a look around and if you like it register, it's free to use.
+        </div>
         <%= render(partial: 'subscriptions/feed', object: @entries) %>
       <% else %>
         <% if @subscription_count == 0 %>
