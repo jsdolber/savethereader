@@ -7,6 +7,7 @@ class Subscription < ActiveRecord::Base
   validates_presence_of :feed_id, :user_id
   validates_uniqueness_of :feed_id, :scope => :user_id
   validate :subscription_limit_reached, :on => :create
+  after_touch :destroy_unread_cache
 
   def self.init(url, group, user_id)
     # first check if feed exists
