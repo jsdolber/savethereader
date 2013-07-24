@@ -23,8 +23,6 @@ li.group {cursor:pointer}
 
 .feed-link-template {display:none;}
 
-.entry h4 a {color:black;}
-
 div.new-group {display:none;}
 #new-group-name {width: 60px;}
 .new-group .btn {margin-bottom:10px;}
@@ -34,4 +32,8 @@ div.new-group {display:none;}
 #add-subscription-btn {margin-bottom:100px}
 
 .sidebar-nav-fixed {font-size:90%}
-
+.entry h3 a {color:black;}
+.entry h3 {font-size: 22.5px;}
+.entry-content h1 { font-size: 140%;font-weight: 500;text-rendering:optimizeLegibility; }
+.entry-content h2 { font-size: 130%;font-weight: 500;text-rendering:optimizeLegibility; }
+.entry-content h3 { font-size: 120%;font-weight: 500;text-rendering:optimizeLegibility; }

@@ -4,13 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Save The Reader" %></title>
-    <meta name="description" content="A minimalistic RSS reader.">
+    <meta name="description" content="A lightweight news aggregator.">
+    <meta property="og:url" content="http://www.savethereader.com">
+    <meta property="og:site_name" content="Save The Reader">
+    <meta property="og:title" content="Save The Reader">
+    <meta property="og:description" content="A lightweight news aggregator.">
     <meta name="author" content="">
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
     <%= yield(:head) %>
   </head>

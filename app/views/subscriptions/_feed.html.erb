@@ -1,6 +1,6 @@
 <% @entries.each do |entry| %>
   <section class="entry <%= entry.is_read(@user_id)? 'read' : 'unread' %>" id="<%= entry.id %>">
-  <h4><a href="<%= h(entry.url) %>" class="title-link" target="_blank"><%= entry.title.html_safe %></a></h4>
+  <h3><a href="<%= h(entry.url) %>" class="title-link" target="_blank"><%= entry.title.html_safe %></a></h3>
   <div class="entry-content">
     <div class="tabbable" style="margin-bottom: 18px;">
       <%= Sanitize.clean(entry.content.nil?? entry.summary : entry.content, Sanitize::Config::RELAXED).html_safe %>
