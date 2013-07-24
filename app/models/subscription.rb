@@ -20,9 +20,12 @@ class Subscription < ActiveRecord::Base
   end
 
   def unread_count
+    return read_unread_number_cache unless read_unread_number_cache.nil?
     r_entries = read_entries.collect {|re| re.entry_id }
     entries = self.feed.entries.where('updated_at > ?', self.updated_at).collect { |entry| entry.id } #watch out for scaling issues
-    (entries - r_entries).count
+    unread = (entries - r_entries).count
+    write_unread_number_cache unread
+    unread
   end
 
   def get_entries(page_num, per_page)
@@ -38,6 +41,10 @@ class Subscription < ActiveRecord::Base
         logger.error("no received provider")
       end
     end
+  end
+
+  def destroy_unread_cache
+    Rails.cache.delete unread_number_cache_key
   end
 
   private
@@ -62,6 +69,19 @@ class Subscription < ActiveRecord::Base
     rescue Exception => e
       logger.error('importing subscriptions ' + e.message)
     end
+  end
+
+  # cache methods
+  def write_unread_number_cache(num)
+    Rails.cache.write unread_number_cache_key, num, :expires_in => 10.minutes
+  end
+
+  def read_unread_number_cache
+    Rails.cache.read unread_number_cache_key 
+  end
+
+  def unread_number_cache_key
+    "#{self.id}_unread"
   end
 
   # validate methods

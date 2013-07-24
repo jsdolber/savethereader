@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   before_filter :authenticate_user!, :only => [:s, :subscription_sidebar]
-  #caches_action :index, :expires_in => 10.minutes
+  caches_action :index, :expires_in => 10.minutes
 
   def index
     @entries = default_feed.entries.limit(15) unless default_feed.nil?

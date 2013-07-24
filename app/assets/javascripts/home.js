@@ -209,23 +209,27 @@ $(document).ready(function(){
         var el = $(this).closest("section");
         if (el.hasClass("unread")) {
           entryWasRead(el);
+          markEntryAsRead(el); //call this preemptively for ux
         }
      });
     };
 
     function entryWasRead(entryEl) {
-
       $.post("/readentries.json",
       {
          'readentry[entry_id]': entryEl.attr("id"),
          'readentry[subscription_id]': getSelectedSubscriptionId()
       })
       .done(function(data) { 
-        entryEl.fadeTo(0, 0.5);
-        entryEl.removeClass("unread");
-        entryEl.addClass("read");
-        decrementActiveReadCount();
+        markEntryAsRead(entryEl); 
       })
+    }
+
+    function markEntryAsRead(el) {
+       el.fadeTo(0, 0.5);
+       el.removeClass("unread");
+       el.addClass("read");
+       decrementActiveReadCount();
     }
 
     checkIfNextPageNeeded = function(page_num, url){
