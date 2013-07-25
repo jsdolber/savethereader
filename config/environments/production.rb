@@ -66,9 +66,4 @@ Savethereader::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   #
   #
-  # Redis Store
-  config.action_dispatch.rack_cache = {
-   metastore:   "redis://localhost:6379/1/metastore",
-   entitystore: "redis://localhost:6379/1/entitystore"
-  }
 end
