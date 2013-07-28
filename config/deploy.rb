@@ -1,7 +1,6 @@
 set :application, "savethereader"
 set :deploy_to, "/var/www/#{application}"
 set :repository,  "git@github.com:jsdolber/savethereader.git"
-set :use_sudo, true
 set :port, 30003
 set :user, 'oneman'
 set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
@@ -12,7 +11,7 @@ set :rvm_type, :system
 set :rvm_install_with_sudo, true
 
 
-server "106.187.88.126", :app, :web, :primary => true
+server "ks4000727.ip-198-245-63.net", :app, :web, :primary => true
 #role :db,  "sugarglider.c5vxgq82kuz5.us-west-2.rds.amazonaws.com", :primary => true # This is where Rails migrations will run
 
 # if you want to clean up old releases on each deploy uncomment this:
