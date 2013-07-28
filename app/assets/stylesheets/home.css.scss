@@ -29,8 +29,8 @@ div.new-group {display:none;}
 
 .btn-grp-toolbar {margin-right:100px;}
 
-#add-subscription-btn {margin-bottom:100px}
-
+#add-subscription-btn {margin-bottom:100px; }
+#add-subscription-btn a { font-size:95% }
 .sidebar-nav-fixed {font-size:90%}
 .entry h3 a {color:black;}
 .entry h3 {font-size: 20.5px;}
@@ -38,3 +38,4 @@ div.new-group {display:none;}
 .entry-content h2 { font-size: 130%;font-weight: 500; }
 .entry-content h3 { font-size: 120%;font-weight: 500; }
 .entry-content p { margin:15px 0; }
+.entry-content blockquote p { font-size: 14px; }

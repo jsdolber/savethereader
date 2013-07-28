@@ -4,6 +4,7 @@ class Feed < ActiveRecord::Base
   validates_presence_of :title, :url
   has_many :subscriptions, :dependent => :destroy
   has_many :entries, :dependent => :destroy
+  has_many :entries
 
   validates_uniqueness_of :url
 

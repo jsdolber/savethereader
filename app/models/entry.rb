@@ -5,6 +5,8 @@ class Entry < ActiveRecord::Base
 
   validates_uniqueness_of :guid, :scope => :feed_id
 
+  belongs_to :feed
+
   def self.init_with_feedzirra_entry(entry)
     new_entry = Entry.new
     new_entry.guid = entry.id
