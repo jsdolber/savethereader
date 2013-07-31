@@ -1,5 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_filter :authenticate_user!
+  require_dependency 'entry'
   #caches_action :show, :cache_path => custom_cache_path.to_proc
 
   # GET /subscriptions

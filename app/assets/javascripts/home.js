@@ -209,7 +209,6 @@ $(document).ready(function(){
         var el = $(this).closest("section");
         if (el.hasClass("unread")) {
           entryWasRead(el);
-          markEntryAsRead(el); //call this preemptively for ux
         }
      });
     };
@@ -222,6 +221,9 @@ $(document).ready(function(){
       })
       .done(function(data) { 
         markEntryAsRead(entryEl); 
+      })
+      .fail(function(data) {
+        //console.log("fail");
       })
     }
 

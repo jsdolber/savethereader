@@ -31,7 +31,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def get_entries(page_num, per_page)
-    get_all_entries(page_num, per_page)
+    self.feed.cached_entries(page_num, per_page)
   end
 
   def self.import(subscriptions, user_id)
@@ -50,10 +50,6 @@ class Subscription < ActiveRecord::Base
   end
 
   private
-  def get_all_entries(page_num, per_page)
-    self.feed.entries.paginate(page: page_num || 1, per_page: per_page || 10, order: 'created_at DESC')
-  end
-
   def get_unread_entries(page_num, per_page)
     return nil if self.unread_count == 0
     r_entries = read_entries.collect {|re| re.entry_id }
