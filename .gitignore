@@ -21,3 +21,5 @@ log/feed_updater.rb.pid
 
 .DS_Store
 public/.DS_Store
+
+public/about.html
