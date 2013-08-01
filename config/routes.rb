@@ -1,4 +1,8 @@
 Savethereader::Application.routes.draw do
+  get "errors/not_found"
+
+  get "errors/internal_server_error"
+
   devise_for :users
 
   # The priority is based upon order of creation:
@@ -14,6 +18,9 @@ Savethereader::Application.routes.draw do
   resources :subscriptions, :except => [:index, :new, :edit] 
   resources :readentries, :only => [:create, :show]
   resources :subscription_groups, :only => [:create, :show]
+
+  match "/404", :to => "errors#not_found"
+  match "/500", :to => "errors#internal_server_error"
 
   authenticated :user do
     root :to => "home#s", as: :authenticated_root
