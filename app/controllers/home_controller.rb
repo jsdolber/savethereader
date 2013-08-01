@@ -13,7 +13,6 @@ class HomeController < ApplicationController
     @groups = @subs_groups
     @subscription_count = current_user.subscriptions.count
     render :template => 'home/index'
-    asd
   end
 
   private
