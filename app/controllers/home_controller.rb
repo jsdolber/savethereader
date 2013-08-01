@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   before_filter :authenticate_user!, :only => [:s, :subscription_sidebar]
-  caches_action :index, :expires_in => 10.minutes
+  caches_action :index, :expires_in => 60.minutes
 
   def index
     @entries = default_feed.entries.limit(15) unless default_feed.nil?
@@ -12,7 +12,7 @@ class HomeController < ApplicationController
     @subs_ungroup = current_user.ungrouped_subscriptions
     @groups = @subs_groups
     @subscription_count = current_user.subscriptions.count
-    render :template => 'home/index'
+    render :template => 'home/index'as
   end
 
   private
