@@ -12,7 +12,7 @@ class HomeController < ApplicationController
     @subs_ungroup = current_user.ungrouped_subscriptions
     @groups = @subs_groups
     @subscription_count = current_user.subscriptions.count
-    render :template => 'home/index'as
+    render :template => 'home/index'
   end
 
   private
