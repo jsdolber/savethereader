@@ -171,8 +171,11 @@ $(document).ready(function(){
   
   decrementActiveReadCount = function(){
       var unread_cnt = parseInt($(".feed-link.active .unreadcnt").text());
+      var feed_active_el = $(".feed-link.active .unreadcnt");
       if (unread_cnt > 0)
-        $(".feed-link.active .unreadcnt").html(unread_cnt - 1);
+        feed_active_el.html(unread_cnt - 1);
+      else if (unread_cnt == 0)
+        feed_active_el.html('');
    }
 
    loadSubscription = function(subs_id) {

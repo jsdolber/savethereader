@@ -201,37 +201,39 @@ $(document).ready(function(){
     bindInviewEntries = function() {
      $('.entry').bind('inview', function(e,visible) {
       if( !visible && direction == 'down' && $(this).hasClass("unread")) {
-       entryWasRead($(this));
+       entryWasRead($(this), getSelectedSubscriptionId());
       }
      });
 
      $(".title-link").click(function() {
         var el = $(this).closest("section");
         if (el.hasClass("unread")) {
-          entryWasRead(el);
+          entryWasRead(el, getSelectedSubscriptionId());
         }
      });
     };
 
-    function entryWasRead(entryEl) {
+    function entryWasRead(entryEl, subscriptionId) {
       $.post("/readentries.json",
       {
          'readentry[entry_id]': entryEl.attr("id"),
-         'readentry[subscription_id]': getSelectedSubscriptionId()
+         'readentry[subscription_id]': subscriptionId
       })
       .done(function(data) { 
-        markEntryAsRead(entryEl); 
+        markEntryAsRead(entryEl, subscriptionId); 
       })
       .fail(function(data) {
         //console.log("fail");
       })
     }
 
-    function markEntryAsRead(el) {
+    function markEntryAsRead(el, subscriptionId) {
        el.fadeTo(0, 0.5);
        el.removeClass("unread");
        el.addClass("read");
-       decrementActiveReadCount();
+       
+       if (getSelectedSubscriptionId() == subscriptionId)
+          decrementActiveReadCount();
     }
 
     checkIfNextPageNeeded = function(page_num, url){
