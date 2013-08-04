@@ -1,0 +1,7 @@
+<% if @subs_groups.nil? %>
+  <%= display_public_sidebar_feeds.html_safe %>
+<% else %>
+  <%= h display_user_no_count_sidebar_feeds(@subs_groups, @subs_ungroup) %>
+<% end %>
+<div class="spacer">&nbsp;</div>
+<%= render 'layouts/sidebar_add_subs_button' %>

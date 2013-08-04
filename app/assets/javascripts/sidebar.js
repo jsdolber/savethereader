@@ -221,7 +221,9 @@ $(document).ready(function(){
 
     // sidebar refresh
     intervalId = setInterval(loadSidebar, refreshIntervalInMinutes * 60 * 1000);
-    
+    // initial load
+    loadSidebar();
+
     var selSubscription = getSelectedSubscriptionId();
     // initial subscription reading
     if (null == selSubscription || $(".feed-link#" + selSubscription).length == 0) {
@@ -230,4 +232,6 @@ $(document).ready(function(){
     }
 
     $(".feed-link#" + selSubscription).click();
+
+    
 });

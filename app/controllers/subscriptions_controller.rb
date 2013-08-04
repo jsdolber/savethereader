@@ -110,8 +110,8 @@ class SubscriptionsController < ApplicationController
 
   # GET /sidebar.js
   def sidebar
-    @subs_groups = current_user.subscription_groups
-    @subs_ungroup = current_user.subscriptions.where(:group_id => nil)
+    @subs_groups = current_user.cached_subscription_groups
+    @subs_ungroup = current_user.cached_ungrouped_subscriptions
     respond_to do |format|
       format.js
     end
