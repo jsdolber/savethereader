@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'rack/throttle'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -79,5 +80,8 @@ module Savethereader
     config.action_mailer.raise_delivery_errors = false
     ActionMailer::Base.default :from => 'sebastian@savethereader.com'
     config.action_mailer.default_url_options = { :host => 'savethereader.com' }
+
+    # throttle
+    config.middleware.use Rack::Throttle::Daily, :cache => Redis.new, :key_prefix => :throttle
   end
 end

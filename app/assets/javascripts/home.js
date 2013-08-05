@@ -214,6 +214,10 @@ $(document).ready(function(){
     };
 
     function entryWasRead(entryEl, subscriptionId) {
+
+      if (entryEl.hasClass('read'))
+         return; //avoid duplicated calls
+
       $.post("/readentries.json",
       {
          'readentry[entry_id]': entryEl.attr("id"),
@@ -228,12 +232,17 @@ $(document).ready(function(){
     }
 
     function markEntryAsRead(el, subscriptionId) {
+       if (el.hasClass('read'))
+         return; //avoid duplicated calls
+
        el.fadeTo(0, 0.5);
        el.removeClass("unread");
        el.addClass("read");
-       
-       if (getSelectedSubscriptionId() == subscriptionId)
+       var selSubscriptionId = getSelectedSubscriptionId();
+
+       if (selSubscriptionId == subscriptionId) {
           decrementActiveReadCount();
+       }
     }
 
     checkIfNextPageNeeded = function(page_num, url){
