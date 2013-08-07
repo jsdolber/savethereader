@@ -20,7 +20,8 @@ $(document).ready(function(){
    };
 
    getSelectedSubscriptionId = function(){
-     return $.cookie('selSubscriptionId');
+     var subs_id = $.cookie('selSubscriptionId') || 0;
+     return parseInt(subs_id);
    };
 
    function setGroupCollapsed(groupId, status) {
@@ -192,7 +193,8 @@ $(document).ready(function(){
         dataType: "text"
       })
       .done(function(data) {
-        eval(data);
+        if (subs_id == getSelectedSubscriptionId())
+          eval(data);
       })
       .fail(function(data) {
         if (data.status == 200) return; // not json 

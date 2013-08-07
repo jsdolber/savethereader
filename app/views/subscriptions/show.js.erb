@@ -10,7 +10,7 @@ var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js,
  <% if params[:page].to_i == 0 %>
     $('div.feed-view').html(feed_html);
     window.scrollTo(0, 0);
- <% else %>
+  <% else %>
     $('div.feed-view').append(feed_html);
  <% end %>
 
