@@ -1,6 +1,7 @@
 var page_num = parseIntWithEmpty('<%= params[:page] %>') + 1; 
 var page_param = 'page=' + page_num;
 var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js, page: (params[:page] || 1).to_i + 1, per_page: params[:per_page] || 10) %>';
+$('a.hook').attr('href', entries_load_url);
 <% if !@entries.nil? && !@entries.empty? %>
 
  $(".entry.read").removeClass("read");
@@ -15,10 +16,15 @@ var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js,
  <% end %>
 
  $(".feed-view a").attr("target", "_blank");
- $('a.hook').attr('href', entries_load_url); //.show();
+ $('.loader').hide();
  
  if ($(".entry.unread").length < 15) {
-   $.getScript($('a.hook').attr('href'));
+   <% if reached_page_limit(params[:page]) %>
+      showLoadOneMore();
+   <% else %>
+     $.getScript($('a.hook').attr('href'));
+     $('.loader').show();
+   <% end %>
  }  
  
  // scroll logic 
@@ -31,11 +37,14 @@ var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js,
    $(".entry.read").fadeTo(0, 0.5);
  }
 <% else %>
-   $('a.hook').attr('href', '');
+   
    $('.loader').hide();
 
-   if ($("#no-entries-banner").length == 0)
-    $("#overview").append("<div id='no-entries-banner' class='hero-unit'><h3>...and that's all there is for now!</h3></div>");
+   if ($("#no-entries-banner").length == 0) {
+      $("#overview").append("<div id='no-entries-banner' class='hero-unit'><h3>...and that's all there is for now!</h3></div>");
+      $('a.hook').attr('href', '');
+   }
+
 <% end %>
 
 showRead = <%= show_read %>;

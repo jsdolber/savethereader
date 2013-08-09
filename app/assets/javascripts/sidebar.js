@@ -9,6 +9,7 @@ var expandGroup;
 var collapseGroup;
 var loadSubscription;
 var setSelectedSubscriptionCountToZero;
+var getActiveReadCount;
 
 $(document).ready(function(){
    'use strict';
@@ -178,6 +179,11 @@ $(document).ready(function(){
         feed_active_el.html(unread_cnt - 1);
       else 
         feed_active_el.remove();
+   }
+
+   getActiveReadCount = function(){
+      if ($(".feed-link.active .unreadcnt").length == 0) return 0;
+      return parseInt($(".feed-link.active .unreadcnt").text());
    }
 
    loadSubscription = function(subs_id) {

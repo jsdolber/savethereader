@@ -5,6 +5,7 @@ var showReadText = "<i class='icon-eye-open'></i> Show read";
 var updateSubscriptionGroup;
 var removeSubscription;
 var checkIfNextPageNeeded;
+var showLoadOneMore;
 
 $(document).ready(function(){
    'use strict'; 
@@ -263,6 +264,17 @@ $(document).ready(function(){
       }
       return false;
     }
+
+    showLoadOneMore = function() {
+       if (getActiveReadCount() > 0) {
+         $("#no-entries-banner").length > 0 && $("#no-entries-banner").remove();
+         $("#overview").append("<div id='no-entries-banner' class='hero-unit'><h3 id='load-more'>Click <span>here</span> to load more entries...</h3></div>");
+       }
+
+       $("#load-more").bind('click', function() {
+        $('.loader').show();
+       }); 
+   }
 
    // navigation bar actions
    $(".btn-show-unread").bind('click',function(){
