@@ -25,7 +25,9 @@ $('a.hook').attr('href', entries_load_url);
      $.getScript($('a.hook').attr('href'));
      $('.loader').show();
    <% end %>
- }  
+ }
+ else
+  $('.loader').show(); 
  
  // scroll logic 
  bindInviewEntries();
