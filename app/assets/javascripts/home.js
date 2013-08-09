@@ -213,7 +213,12 @@ $(document).ready(function(){
      });
     };
 
+    var entryCache = {};
     function entryWasRead(entryEl, subscriptionId) {
+      if (entryCache[entryEl.attr("id")] == 1)
+        return;
+      
+      entryCache[entryEl.attr("id")] = 1;
 
       if (entryEl.hasClass('read'))
          return; //avoid duplicated calls
@@ -227,8 +232,9 @@ $(document).ready(function(){
         markEntryAsRead(entryEl, subscriptionId); 
       })
       .fail(function(data) {
-        //console.log("fail");
-      })
+        
+      }).always(function(data) {
+      });
     }
 
     function markEntryAsRead(el, subscriptionId) {

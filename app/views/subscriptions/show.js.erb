@@ -16,10 +16,10 @@ var entries_load_url = '<%= subscription_path(id: @subscription_id, format: :js,
 
  $(".feed-view a").attr("target", "_blank");
  $('a.hook').attr('href', entries_load_url); //.show();
-
+ 
  if ($(".entry.unread").length < 15) {
-   $.getScript($('a.hook').attr('href')); 
- }
+   $.getScript($('a.hook').attr('href'));
+ }  
  
  // scroll logic 
  bindInviewEntries();
