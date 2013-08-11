@@ -1,7 +1,4 @@
 # for every feed updater, there's a killer
-
-
-
 class FeedUpdaterKiller
   @queue = :feed_updater_queue
   WORKER_TIMEOUT = 120 # two hours
