@@ -1,7 +1,11 @@
 # for every feed updater, there's a killer
+
+
+
 class FeedUpdaterKiller
   @queue = :feed_updater_queue
-  def self.perform
+  WORKER_TIMEOUT = 120 # two hours
+  def self.perform      
       logger = Rails.logger
       logger.info "Thrill to kill at #{Time.now}.\n"
 
