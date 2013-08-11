@@ -3,3 +3,9 @@ update_feeds:
   class: FeedUpdater
   queue: feeds
   description: "This job will update feeds every 20 min"
+
+kill_update_feeds:
+  cron: "0 */2 * * *"
+  class: FeedUpdaterKiller
+  queue: feeds
+  description: "Kills zombie updaters"

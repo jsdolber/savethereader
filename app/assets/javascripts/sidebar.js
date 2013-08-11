@@ -217,7 +217,12 @@ $(document).ready(function(){
       , statusCode: {
               401: function() {
                 clearInterval(intervalId);
-             }}})
+              },
+              504: function(){
+                loadSidebar(); // call again if timeout
+              }
+          }
+      })
       .done(function(data) { 
         eval(data);
       })
