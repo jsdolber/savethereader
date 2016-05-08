@@ -22,8 +22,8 @@ test:
 production:
   adapter: mysql2
   host: sugarglider.c5vxgq82kuz5.us-west-2.rds.amazonaws.com
-  username: oneman
-  password: SaveTheRidder1991
+  username: 
+  password: 
   database: savethereader_production
   pool: 5
   timeout: 5000
