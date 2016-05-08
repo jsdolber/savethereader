@@ -1,3 +1,7 @@
 == Save The Reader
 
 A minimalistic rss reader.
+Stack: 
+- Ruby on Rails
+- MySQL
+- JQuery/Boostrap
